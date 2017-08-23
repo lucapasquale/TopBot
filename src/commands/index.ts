@@ -1,16 +1,15 @@
 import * as Discord from 'discord.js';
-import fap from './fap';
-import ole from './ole';
+import youtube from './youtube';
 
 
-export default async function(message: Discord.Message) {
+export default function (message: Discord.Message) {
   const { content } = message;
+  const cmds = getCommands(content);
+  
+  return youtube(cmds, message);
+}
 
+function getCommands(content: string) {
   const cleanText = content.trim().substring(1);
-  const cmds = cleanText.split(' ');
-
-  switch (cmds[0]) {
-    case 'fap': await fap(cmds, message); break;
-    case 'ole': await ole(cmds, message); break;
-  }
+  return cleanText.split(' ');
 }

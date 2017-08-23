@@ -1,18 +1,21 @@
-import * as fs from 'fs';
 import * as Discord from 'discord.js';
 import * as ytdl from 'ytdl-core';
 
 
-export function test(connection: Discord.VoiceConnection) {
-  const videoId = get_video_id('https://www.youtube.com/watch?v=1V14g-NT6SU');
-  const audioStream = ytdl('https://www.youtube.com/watch?v=' + videoId);
-  console.log(audioStream);
+export default function (cmds: string[], message: Discord.Message) {
+  const videoId = getVideoId(cmds[1]);
+  if (!videoId) {
+    return;
+  }
 
-  connection.playStream(audioStream);
+  const audioStream = ytdl('https://www.youtube.com/watch?v=' + videoId);
+
+  connectToChannel(message).then((connection) => {
+    connection.playStream(audioStream);
+  });
 }
 
-
-function get_video_id(url: string) {
+function getVideoId(url: string) {
   const regex = /(?:\?v=|&v=|youtu\.be\/)(.*?)(?:\?|&|$)/;
   const matches = url.match(regex);
 
@@ -20,5 +23,13 @@ function get_video_id(url: string) {
     return matches[1];
   } else {
     return url;
+  }
+}
+
+function connectToChannel(message: Discord.Message) {
+  const { voiceChannel } = message.member;
+
+  if (voiceChannel) {
+    return voiceChannel.join();
   }
 }
