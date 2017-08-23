@@ -1,0 +1,22 @@
+{
+  "name": "topbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "tslint './src/**/*.ts'",
+    "start": "tsc && node dist/index.js"
+  },
+  "devDependencies": {
+    "tslint": "^5.6.0",
+    "tslint-config-airbnb": "^5.2.1",
+    "typescript": "^2.4.2"
+  },
+  "dependencies": {
+    "@types/node": "^8.0.24",
+    "discord.js": "^11.1.0",
+    "moment": "^2.18.1",
+    "opusscript": "^0.0.3",
+    "ytdl-core": "^0.16.0"
+  }
+}
