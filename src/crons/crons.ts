@@ -1,10 +1,10 @@
 import * as Discord from 'discord.js';
 
-import streamOnline from './handlers/stream-online';
+import mixerStreamOnline from './handlers/mixer-stream-online';
 
 
 const crons = [
-  { fn: streamOnline, interval: 'every 15 sec' },
+  { fn: mixerStreamOnline, interval: 'every 30 sec' },
 ];
 
 export default crons;

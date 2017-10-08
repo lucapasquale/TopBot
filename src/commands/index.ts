@@ -4,8 +4,7 @@ import mixer from './mixer';
 
 
 export default async function (message: Discord.Message) {
-  const { content } = message;
-  const cmds = await getCommands(content);
+  const cmds = getCommands(message.content);
 
   let command;
   switch (cmds[0]) {
@@ -18,7 +17,7 @@ export default async function (message: Discord.Message) {
   }
 }
 
-async function getCommands(content: string) {
+function getCommands(content: string) {
   const cleanText = content.trim().substring(1);
   return cleanText.split(' ');
 }

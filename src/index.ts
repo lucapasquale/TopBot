@@ -11,6 +11,7 @@ client.login(config.DISCORD_KEY);
 
 client.on('ready', () => {
   console.log('Bot on!');
+
   crons(client.channels.first() as Discord.TextChannel);
 });
 

@@ -6,20 +6,20 @@ export default async function (cmds: string[], message: Discord.Message) {
   const token = cmds[0];
 
   if (!token) {
-    message.channel.send('Please inform a Mixer user!');
+    await message.channel.send('Please inform a Mixer user!');
     return;
   }
 
   addStream(token, message);
 }
 
-function addStream(token: string, message: Discord.Message) {
+async function addStream(token: string, message: Discord.Message) {
   const existingStream = db.get('streams')
     .find({ token })
     .value();
 
   if (existingStream) {
-    message.channel.send(`Stream **${token}** was already on the list`);
+    await message.channel.send(`Stream **${token}** was already on the list`);
     return;
   }
 
@@ -27,5 +27,5 @@ function addStream(token: string, message: Discord.Message) {
     .push({ token, online: false })
     .write();
 
-  message.channel.send(`Stream **${token}** added to list of streamers`);
+  await message.channel.send(`Stream **${token}** added to list of streamers`);
 }
