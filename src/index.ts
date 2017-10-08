@@ -1,16 +1,21 @@
 import * as Discord from 'discord.js';
+import config from './config';
+
 import commands from './commands';
+import crons from './crons';
 
 
-const bot = new Discord.Client();
-bot.login(process.env.DISCORD_KEY);
+const client = new Discord.Client();
+client.login(config.DISCORD_KEY);
 
-bot.on('ready', () => {
-  console.log('Bot on');
+
+client.on('ready', () => {
+  console.log('Bot on!');
+  crons(client.channels.first() as Discord.TextChannel);
 });
 
-bot.on('message', (message) => {
+client.on('message', async (message) => {
   if (message.content.charAt(0) === '$') {
-    commands(message);
+    await commands(message);
   }
 });
