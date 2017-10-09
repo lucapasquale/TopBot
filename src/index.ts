@@ -4,7 +4,7 @@ import config from './config';
 import commands from './commands';
 import crons from './crons';
 
-console.log('discord key', config.DISCORD_KEY);
+
 const client = new Discord.Client();
 client.login(config.DISCORD_KEY);
 
