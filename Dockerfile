@@ -8,4 +8,6 @@ RUN yarn
 
 COPY . .
 
+EXPOSE 80
+
 CMD ["yarn", "start"]
