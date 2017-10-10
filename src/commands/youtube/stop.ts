@@ -7,6 +7,9 @@ import { playNextVideo } from './helpers/play-next';
 
 
 export default async function (cmds: string[], message: Discord.Message) {
-  queue.length = 0;
+  while (queue.length > 0) {
+    queue.pop();
+  }
+
   await playNextVideo(message);
 }

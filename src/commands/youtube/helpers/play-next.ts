@@ -10,6 +10,11 @@ export let audioConnection: Discord.VoiceConnection;
 
 export async function playNextVideo(message: Discord.Message) {
   if (queue.length === 0) {
+    isPlaying = false;
+    streamDispatcher.end();
+
+    audioConnection.disconnect();
+    audioConnection = null;
     return;
   }
 
@@ -21,7 +26,7 @@ export async function playNextVideo(message: Discord.Message) {
     audioConnection = await voiceChannel.join();
   }
 
-  streamDispatcher = audioConnection.playStream(audioStream);
+  streamDispatcher = audioConnection.playStream(audioStream, { volume: 0.25 });
 
   isPlaying = true;
   queue.splice(0);
