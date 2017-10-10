@@ -8,7 +8,6 @@ import { isPlaying, playNextVideo } from './helpers/play-next';
 export default async function (cmds: string[], message: Discord.Message) {
   await addToQueue(cmds, message);
 
-  console.log(isPlaying, queue);
   if (!isPlaying && queue.length > 0) {
     await playNextVideo(message);
   }
