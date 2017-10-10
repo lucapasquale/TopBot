@@ -1,6 +1,7 @@
 import * as Discord from 'discord.js';
 
 import mixer from './mixer';
+import youtube from './youtube';
 
 
 export default async function (message: Discord.Message) {
@@ -9,6 +10,7 @@ export default async function (message: Discord.Message) {
   let command;
   switch (cmds[0]) {
     case 'mixer': command = mixer; break;
+    case 'youtube': command = youtube; break;
   }
 
   if (command) {

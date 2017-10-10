@@ -12,10 +12,10 @@ export default async function (cmds: string[], message: Discord.Message) {
     case 'add': command = addStream; break;
     case 'remove': command = removeStream; break;
     case 'list': command = listStreams; break;
+
+    default: command = listStreams;
   }
 
-  if (command) {
-    cmds.shift();
-    await command(cmds, message);
-  }
+  cmds.shift();
+  await command(cmds, message);
 }
