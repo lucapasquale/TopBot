@@ -13,7 +13,7 @@ export default async function (cmds: string[], message: Discord.Message) {
     case 'remove': command = removeStream; break;
     case 'list': command = listStreams; break;
 
-    default: command = listStreams;
+    default: command = listStreams; cmds.unshift('');
   }
 
   cmds.shift();

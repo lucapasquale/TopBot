@@ -1,6 +1,8 @@
 import * as Discord from 'discord.js';
 
 import play from './play';
+import skip from './skip';
+import stop from './stop';
 
 
 export default async function (cmds: string[], message: Discord.Message) {
@@ -8,8 +10,10 @@ export default async function (cmds: string[], message: Discord.Message) {
 
   switch (cmds[0]) {
     case 'play': command = play; break;
+    case 'skip': command = skip; break;
+    case 'stop': command = stop; break;
 
-    default: command = play; cmds.push('');
+    default: command = play; cmds.unshift('');
   }
 
   cmds.shift();

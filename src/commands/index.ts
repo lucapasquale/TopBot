@@ -10,7 +10,7 @@ export default async function (message: Discord.Message) {
   let command;
   switch (cmds[0]) {
     case 'mixer': command = mixer; break;
-    case 'youtube': command = youtube; break;
+    case 'yt': command = youtube; break;
   }
 
   if (command) {
