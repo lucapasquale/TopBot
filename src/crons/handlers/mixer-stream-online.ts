@@ -40,7 +40,7 @@ function generateMessage(token: string, data: any) {
     description: `Game: **${game}**\nViewers: **${viewersCurrent}**`,
     color: 16777215,
     thumbnail: {
-      url: 'https://github.com/mixer/branding-kit/blob/master/png/MixerMerge_Dark.png?raw=true'
+      url: 'https://github.com/mixer/branding-kit/blob/master/png/MixerMerge_Dark.png?raw=true',
     },
   };
 
