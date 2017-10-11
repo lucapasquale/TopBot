@@ -37,9 +37,10 @@ export async function playNextVideo(message: Discord.Message) {
 
   streamDispatcher = audioConnection.playStream(audioStream, { volume });
 
-  isPlaying = true;
+  db.set('server.lastSongTime', null).write();
   setGame(videoInfo.title);
 
+  isPlaying = true;
   queue.splice(0);
 
   streamDispatcher.once('end', async (reason) => {

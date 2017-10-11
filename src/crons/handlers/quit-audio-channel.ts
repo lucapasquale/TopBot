@@ -1,9 +1,9 @@
 import db from '../../common/db';
-import { audioConnection } from '../../commands/youtube/helpers/play-next';
+import { audioConnection, isPlaying } from '../../commands/youtube/helpers/play-next';
 
 export default async function () {
   const lastSongTime: Date = db.get('server.lastSongTime').value();
-  if (!lastSongTime || !audioConnection) {
+  if (!lastSongTime || isPlaying || !audioConnection) {
     return;
   }
 
