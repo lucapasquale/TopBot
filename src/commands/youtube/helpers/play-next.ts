@@ -16,7 +16,7 @@ export async function playNextVideo(message: Discord.Message) {
     isPlaying = false;
     streamDispatcher.end();
 
-    db.set('server.lastSongTime', new Date()).write();
+    db.set('server.musicStoppedTime', new Date()).write();
     setGame('');
 
     return;
@@ -37,7 +37,7 @@ export async function playNextVideo(message: Discord.Message) {
 
   streamDispatcher = audioConnection.playStream(audioStream, { volume });
 
-  db.set('server.lastSongTime', null).write();
+  db.set('server.musicStoppedTime', null).write();
   setGame(videoInfo.title);
 
   isPlaying = true;
@@ -52,9 +52,19 @@ export async function playNextVideo(message: Discord.Message) {
   });
 }
 
+
 export function setVolume(value: number) {
   const safeValue = Math.max(0, Math.min(1, value));
 
   volume = safeValue;
   db.set('server.volume', volume).write();
+}
+
+export function setIsPlaying(value: boolean) {
+  isPlaying = value;
+}
+
+export function disconnectAudioChannel() {
+  audioConnection.disconnect();
+  audioConnection = null;
 }
