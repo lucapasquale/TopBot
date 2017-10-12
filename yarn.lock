@@ -6,6 +6,12 @@
   version "3.5.15"
   resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.15.tgz#7232b263a5f91530d52116102d33b2ce2410ccba"
 
+"@types/dotenv@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/dotenv/-/dotenv-4.0.1.tgz#a0db2a2d25b5c01ff387f07c4f1e002d592873e8"
+  dependencies:
+    "@types/node" "*"
+
 "@types/later@^1.2.3":
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@types/later/-/later-1.2.3.tgz#7f14cdc70cc964a00dc78c5dd6eb4e34c4ccb41e"
@@ -13,6 +19,10 @@
 "@types/lowdb@^0.15.0":
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/@types/lowdb/-/lowdb-0.15.0.tgz#e672ea150dd17900df9a195d909aff5ffba370ca"
+
+"@types/node@*":
+  version "8.0.34"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.34.tgz#55f801fa2ddb2a40dd6dfc15ecfe1dde9c129fe9"
 
 "@types/node@^8.0.24":
   version "8.0.33"
@@ -117,6 +127,10 @@ doctrine@^0.7.2:
     esutils "^1.1.6"
     isarray "0.0.1"
 
+dotenv@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
+
 escape-string-regexp@^1.0.2:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
@@ -128,12 +142,6 @@ esutils@^1.1.6:
 esutils@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
-
-ffmpeg@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/ffmpeg/-/ffmpeg-0.0.4.tgz#1c460df8e7da5127f62ceef4bfa06c59c89630cb"
-  dependencies:
-    when ">= 0.0.1"
 
 findup-sync@~0.3.0:
   version "0.3.0"
@@ -455,10 +463,6 @@ vrsource-tslint-rules@^5.1.0:
   resolved "https://registry.yarnpkg.com/vrsource-tslint-rules/-/vrsource-tslint-rules-5.1.1.tgz#9bef7a60bc34f6cdc637d7ba1b8d745b71f6dcbe"
   dependencies:
     tslint "~5.1.0"
-
-"when@>= 0.0.1":
-  version "3.7.8"
-  resolved "https://registry.yarnpkg.com/when/-/when-3.7.8.tgz#c7130b6a7ea04693e842cdc9e7a1f2aa39a39f82"
 
 wordwrap@~0.0.2:
   version "0.0.3"
