@@ -6,24 +6,14 @@ import setGame from '../../../common/set-game';
 import db from '../../../common/db';
 
 
-let volume: number = 0.5;
-export let isPlaying: boolean = false;
+export let isPlaying: boolean;
 export let streamDispatcher: Discord.StreamDispatcher;
-export let audioConnection: Discord.VoiceConnection;
+let audioConnection: Discord.VoiceConnection;
 
 export async function playNextVideo(message: Discord.Message) {
   if (queue.length === 0) {
-    isPlaying = false;
-    streamDispatcher.end();
-
-    db.set('server.musicStoppedTime', new Date()).write();
-    setGame('');
-
-    return;
+    return stopPlaying(message);
   }
-
-  const videoInfo = queue[0];
-  const audioStream = ytdl(`https://www.youtube.com/watch?v=${videoInfo.videoId}`);
 
   if (!audioConnection) {
     const { voiceChannel } = message.member;
@@ -35,9 +25,12 @@ export async function playNextVideo(message: Discord.Message) {
     audioConnection = await voiceChannel.join();
   }
 
+  const videoInfo = queue[0];
+  const audioStream = ytdl(`https://www.youtube.com/watch?v=${videoInfo.videoId}`);
+
+  const volume = db.get('server.volume').value();
   streamDispatcher = audioConnection.playStream(audioStream, { volume });
 
-  db.set('server.musicStoppedTime', null).write();
   setGame(videoInfo.title);
 
   isPlaying = true;
@@ -53,18 +46,16 @@ export async function playNextVideo(message: Discord.Message) {
 }
 
 
-export function setVolume(value: number) {
-  const safeValue = Math.max(0, Math.min(1, value));
-
-  volume = safeValue;
-  db.set('server.volume', volume).write();
-}
-
 export function setIsPlaying(value: boolean) {
   isPlaying = value;
 }
 
-export function disconnectAudioChannel() {
+async function stopPlaying(message: Discord.Message) {
+  setGame('');
+  isPlaying = false;
+
+  streamDispatcher.end();
   audioConnection.disconnect();
-  audioConnection = null;
+
+  await message.channel.send('Queue is empty, leaving channel');
 }

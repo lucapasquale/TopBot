@@ -1,5 +1,4 @@
 import * as Discord from 'discord.js';
-import * as ytdl from 'ytdl-core';
 
 import { addToQueue, queue } from './helpers/add-to-queue';
 import { isPlaying, playNextVideo } from './helpers/play-next';
