@@ -3,9 +3,7 @@ import * as Discord from 'discord.js';
 
 export default async function (cmds: string[], message: Discord.Message) {
   const { author } = message;
-
-  const text = cmds.join(' ');
-  const vaporContent = stringToFullWidth(text);
+  const vaporContent = cmds.map(stringToFullWidth).join(' ');
 
   await message.delete();
   return message.channel.send({
@@ -15,7 +13,7 @@ export default async function (cmds: string[], message: Discord.Message) {
         icon_url: author.avatarURL,
       },
 
-      title: vaporContent,
+      title: `\`${vaporContent}\``,
     },
   });
 }

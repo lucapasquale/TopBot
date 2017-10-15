@@ -1,5 +1,6 @@
 import * as Discord from 'discord.js';
 
+import lol from './lol';
 import mixer from './mixer';
 import vapor from './vapor';
 import youtube from './youtube';
@@ -10,6 +11,7 @@ export default async function (message: Discord.Message) {
 
   let command;
   switch (cmds[0]) {
+    case 'lol': command = lol; break;
     case 'mixer': command = mixer; break;
     case 'vapor': command = vapor; break;
     case 'yt': command = youtube; break;
