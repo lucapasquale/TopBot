@@ -2,6 +2,8 @@ import * as Discord from 'discord.js';
 import * as bluebird from 'bluebird';
 
 import { summoner, activeGame, positions } from './helpers/lol-api';
+import getPosition from './helpers/get-position';
+import db from '../../common/db';
 
 
 export default async function (cmds: string[], message: Discord.Message) {
@@ -11,14 +13,9 @@ export default async function (cmds: string[], message: Discord.Message) {
   const game = await activeGame(id);
   const playersPosition = await getPlayersPosition(game.participants);
 
-  const fields = generateTeamField(game, playersPosition);
+  const content = generateMessage(game, playersPosition);
 
-  await message.channel.send({
-    embed: {
-      fields,
-      title: 'test',
-    },
-  });
+  await message.channel.send(content);
 }
 
 async function getPlayersPosition(participants: any) {
@@ -27,45 +24,41 @@ async function getPlayersPosition(participants: any) {
   });
 }
 
-function generateTeamField(game: any, positions: any) {
-  const { participants, bannedChampions } = game;
+function generateMessage(game: any, positions: any) {
+  const { participants, gameQueueConfigId, bannedChampions } = game;
+  const champions = db.get('lol.champions').value();
 
-  let fields: any[] = [];
-  fields = fields.concat(teamFields('Blue Team', 0, 5));
-  fields = fields.concat(teamFields('Red Team', 5, 10));
+  const teamOneValue: string[] = [];
+  const teamTwoValue: string[] = [];
 
-  return fields;
+  participants.forEach((p: any, i: number) => {
+    const { summonerName, championId, teamId } = p;
+    const selectedChampion = champions[championId].name;
 
-  function teamFields(teamName: string, start: number, end: number) {
-    const names: string[] = [];
-    const champions: string[] = [];
-    const ranks: string[] = [];
+    const { tier, rank } = getPosition(positions[i], gameQueueConfigId);
 
-    for (let i = start; i < end; i += 1) {
-      const { summonerName, championId } = participants[i];
-      names.push(summonerName);
-      champions.push(championId);
-
-      const { tier } = positions[i][0] || { tier: 'unranked' };
-      ranks.push(tier);
-    }
-
-    return [
-      {
-        name: teamName,
-        value: names.join('\n'),
-        inline: true,
-      },
-      {
-        name: 'Champion',
-        value: champions.join('\n'),
-        inline: true,
-      },
-      {
-        name: 'Rank',
-        value: ranks.join('\n'),
-        inline: true,
-      },
+    const playerValue = [
+      fixedSizeString(`${tier} ${rank}`, 16),
+      fixedSizeString(selectedChampion, 16),
+      fixedSizeString(summonerName, 16),
     ];
+
+    if (teamId === 100) teamOneValue.push(playerValue.join(''));
+    if (teamId === 200) teamTwoValue.push(playerValue.join(''));
+  });
+
+  return `
+Team Blue: \`\`\`${teamOneValue.join('\n')}\`\`\`
+Team Red: \`\`\`${teamTwoValue.join('\n')}\`\`\`
+  `;
+}
+
+
+function fixedSizeString(text: string, size: number) {
+  const diff = size - text.length;
+  if (diff > 0) {
+    return text + ' '.repeat(diff);
   }
+
+  return text.substring(0, size - 1) + ' ';
 }
