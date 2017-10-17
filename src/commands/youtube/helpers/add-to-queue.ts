@@ -1,6 +1,8 @@
 import * as Discord from 'discord.js';
 import * as ytdl from 'ytdl-core';
 
+import { isPlaying } from './play-next';
+
 
 export const queue: VideoQueue[] = [];
 export type VideoQueue = {
@@ -29,11 +31,12 @@ export async function addToQueue(cmds: string[], message: Discord.Message) {
   };
 
   queue.push(videoQueue);
-  await message.delete();
 
-  const content = `Video added to queue by **${message.author.username}**\nTotal: ${queue.length}`;
-  const embed = queueEmbed(videoInfo);
-  await message.channel.send(content, { embed });
+  let queueTotal = queue.length;
+  queueTotal += isPlaying ? 1 : 0;
+
+  const content = `Video added to queue by **${message.author.username}**\nTotal: ${queueTotal}`;
+  await message.channel.send(content, { embed: queueEmbed(videoInfo) });
 }
 
 

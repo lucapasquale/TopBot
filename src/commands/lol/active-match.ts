@@ -14,7 +14,6 @@ export default async function (cmds: string[], message: Discord.Message) {
   const playersPosition = await getPlayersPosition(game.participants);
 
   const content = generateMessage(game, playersPosition);
-
   await message.channel.send(content);
 }
 
@@ -28,31 +27,48 @@ function generateMessage(game: any, positions: any) {
   const { participants, gameQueueConfigId, bannedChampions } = game;
   const champions = db.get('lol.champions').value();
 
-  const teamOneValue: string[] = [];
-  const teamTwoValue: string[] = [];
+  const [blueTeam, redTeam] = teamsMessage(game, positions);
+  const banned = bannedChampions.map((ban: any) => {
+    const bannedChampion = champions[ban.championId];
+    return bannedChampion ? bannedChampion.name : '*none*';
+  });
+
+  return `
+**Team Blue:** \`\`\`${blueTeam.join('\n')}\`\`\`
+**Team Red:** \`\`\`${redTeam.join('\n')}\`\`\`
+**Bans:** ${banned.join(', ')}
+  `;
+}
+
+
+function teamsMessage(game: any, positions: any) {
+  const { participants, gameQueueConfigId, bannedChampions } = game;
+  const champions = db.get('lol.champions').value();
+
+  const teamOne: string[] = [];
+  const teamTwo: string[] = [];
 
   participants.forEach((p: any, i: number) => {
     const { summonerName, championId, teamId } = p;
     const selectedChampion = champions[championId].name;
 
-    const { tier, rank } = getPosition(positions[i], gameQueueConfigId);
+    const { tier, rank, wins, losses } = getPosition(positions[i], gameQueueConfigId);
+    const percentage = (wins / (wins + losses)) * 100;
+    const winsText = `W/L: ${wins}/${losses} - ${percentage.toPrecision(3)}%`;
 
     const playerValue = [
-      fixedSizeString(`${tier} ${rank}`, 16),
-      fixedSizeString(selectedChampion, 16),
-      fixedSizeString(summonerName, 16),
+      fixedSizeString(`${tier} ${rank}`, 12),
+      fixedSizeString(selectedChampion, 14),
+      fixedSizeString(summonerName, 20),
+      fixedSizeString(winsText, 25),
     ];
 
-    if (teamId === 100) teamOneValue.push(playerValue.join(''));
-    if (teamId === 200) teamTwoValue.push(playerValue.join(''));
+    if (teamId === 100) teamOne.push(playerValue.join(''));
+    if (teamId === 200) teamTwo.push(playerValue.join(''));
   });
 
-  return `
-Team Blue: \`\`\`${teamOneValue.join('\n')}\`\`\`
-Team Red: \`\`\`${teamTwoValue.join('\n')}\`\`\`
-  `;
+  return [teamOne, teamTwo];
 }
-
 
 function fixedSizeString(text: string, size: number) {
   const diff = size - text.length;

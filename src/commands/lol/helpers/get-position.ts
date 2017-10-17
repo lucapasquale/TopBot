@@ -9,11 +9,13 @@ export default function (positions: Position[], gameQueueConfigId: number) {
       rank: '',
       queueType: gameQueueType,
       leaguePoints: 0,
+      wins: 0,
+      losses: 0,
     };
   }
 
   const tier = capitalizeFirstLetter(queuePosition.tier.toLowerCase());
-  const rank = transformRank(queuePosition.rank);
+  const rank = transformRank(queuePosition.rank, queuePosition.tier);
   return {
     tier,
     rank,
@@ -36,7 +38,11 @@ function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function transformRank(rank: Position['rank']) {
+function transformRank(rank: Position['rank'], tier: string) {
+  if (tier.toLowerCase() === 'challenger' || tier.toLowerCase() === 'master') {
+    return '';
+  }
+
   switch (rank) {
     case 'I':   return 1;
     case 'II':  return 2;

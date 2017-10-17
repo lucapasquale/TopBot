@@ -5,7 +5,6 @@ export default async function (cmds: string[], message: Discord.Message) {
   const { author } = message;
   const vaporContent = cmds.map(stringToFullWidth).join(' ');
 
-  await message.delete();
   return message.channel.send({
     embed: {
       author: {
