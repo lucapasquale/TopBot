@@ -1,16 +1,21 @@
 import * as Discord from 'discord.js';
 import * as bluebird from 'bluebird';
 
-import { summoner, activeGame, positions } from './helpers/lol-api';
+import { getSummoner, getActiveGame, getPositions } from './helpers/lol-api';
 import getPosition from './helpers/get-position';
 import db from '../../common/db';
 
 
 export default async function (cmds: string[], message: Discord.Message) {
   const summonerName = cmds[0];
-  const { id } = await summoner(summonerName);
+  const { id } = await getSummoner(summonerName);
 
-  const game = await activeGame(id);
+  const game = await getActiveGame(id);
+  if (!game) {
+    await message.channel.send(`**${summonerName}** is currently not in game!`);
+    return;
+  }
+
   const playersPosition = await getPlayersPosition(game.participants);
 
   const content = generateMessage(game, playersPosition);
@@ -19,7 +24,7 @@ export default async function (cmds: string[], message: Discord.Message) {
 
 async function getPlayersPosition(participants: any) {
   return bluebird.map(participants, (p: any) => {
-    return positions(p.summonerId);
+    return getPositions(p.summonerId);
   });
 }
 

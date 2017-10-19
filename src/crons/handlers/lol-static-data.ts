@@ -1,17 +1,12 @@
-import axios, { AxiosInstance } from 'axios';
-import config from '../../config';
-
 import db from '../../common/db';
+import { getVersions, getChampions } from '../../commands/lol/helpers/lol-api';
 
-
-const lolApi = axios.create({
-  baseURL: 'https://br1.api.riotgames.com/lol/',
-  headers: {
-    'X-Riot-Token': config.LOL_KEY,
-  },
-});
 
 export default async function () {
-  const { data } = await lolApi.get('static-data/v3/champions?locale=en_US&dataById=true');
-  db.set('lol.champions', data.data).write();
+  const versions = await getVersions();
+  const [major, minor, patch] = versions[0].split('.');
+  db.set('lol.version', { major, minor, patch }).write();
+
+  const champions = await getChampions();
+  db.set('lol.champions', champions).write();
 }

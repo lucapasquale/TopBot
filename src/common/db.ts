@@ -12,6 +12,7 @@ export default db;
 
 export type Stream = {
   token: string,
+  service: 'twitch' | 'mixer',
   online: boolean,
 };
 
