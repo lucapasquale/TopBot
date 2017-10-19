@@ -4,6 +4,10 @@ import db, { Stream } from '../../common/db';
 
 export default async function (cmds: string[], message: Discord.Message) {
   const streams = db.get('streams').value();
+  if (streams.length === 0) {
+    message.channel.send('No streams added!');
+    return;
+  }
 
   const { embed } = generateMessage(streams);
   message.channel.send('Streams:', { embed });
