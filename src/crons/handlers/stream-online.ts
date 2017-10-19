@@ -22,7 +22,7 @@ export default async function (channel: Discord.TextChannel) {
 
       if (online && !stream.online) {
         const { content, embed } = service.message(stream.token, data);
-        await channel.send(content, { embed });
+        // await channel.send(content, { embed });
       }
 
       db.get('streams')

@@ -6,7 +6,7 @@ export default async function (cmds: string[], message: Discord.Message) {
   const token = cmds[0];
 
   if (!token) {
-    await message.channel.send('Please inform a Mixer user!');
+    await message.channel.send('Please inform a user!');
     return;
   }
 
