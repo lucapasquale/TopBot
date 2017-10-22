@@ -2,7 +2,7 @@ import * as Discord from 'discord.js';
 import * as bluebird from 'bluebird';
 
 import { getSummoner, getActiveGame, getPositions } from './helpers/lol-api';
-import getPosition from './helpers/get-position';
+import parsePosition from './helpers/parse-position';
 import db from '../../common/db';
 
 
@@ -57,7 +57,7 @@ function teamsMessage(game: any, positions: any) {
     const { summonerName, championId, teamId } = p;
     const selectedChampion = champions[championId].name;
 
-    const { tier, rank, wins, losses } = getPosition(positions[i], gameQueueConfigId);
+    const { tier, rank, wins, losses } = parsePosition(positions[i], gameQueueConfigId);
     const percentage = (wins / (wins + losses)) * 100;
     const winsText = `W/L: ${wins}/${losses} - ${percentage.toPrecision(3)}%`;
 

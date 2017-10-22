@@ -31,8 +31,8 @@ function generateMessage(streams: Stream[]) {
   return {
     embed: {
       fields: [
-        { name: 'Twitch', value: twitchValue.join('\n') },
-        { name: 'Mixer', value: mixerValue.join('\n') },
+        { name: 'Twitch', value: twitchValue.join('\n'), inline: true },
+        { name: 'Mixer', value: mixerValue.join('\n'), inline: true },
       ],
     },
   };
