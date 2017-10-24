@@ -7,11 +7,15 @@ const db = low(adapter);
 
 db.defaults({ streams: [] }).write();
 setStreamsDefault(db);
-
 export default db;
 
 
-export type Stream = { token: string, online: boolean };
+export type Stream = {
+  token: string,
+  service: 'twitch' | 'mixer',
+  online: boolean,
+};
+
 function setStreamsDefault(db: any) {
   const existingStreams = db.get('streams').value();
 

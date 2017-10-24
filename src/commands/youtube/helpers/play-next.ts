@@ -6,25 +6,11 @@ import setGame from '../../../common/set-game';
 import db from '../../../common/db';
 
 
-let volume: number = 0.5;
-export let isPlaying: boolean = false;
+export let isPlaying: boolean;
 export let streamDispatcher: Discord.StreamDispatcher;
-export let audioConnection: Discord.VoiceConnection;
+let audioConnection: Discord.VoiceConnection;
 
 export async function playNextVideo(message: Discord.Message) {
-  if (queue.length === 0) {
-    isPlaying = false;
-    streamDispatcher.end();
-
-    db.set('server.musicStoppedTime', new Date()).write();
-    setGame('');
-
-    return;
-  }
-
-  const videoInfo = queue[0];
-  const audioStream = ytdl(`https://www.youtube.com/watch?v=${videoInfo.videoId}`);
-
   if (!audioConnection) {
     const { voiceChannel } = message.member;
     if (!voiceChannel) {
@@ -35,36 +21,43 @@ export async function playNextVideo(message: Discord.Message) {
     audioConnection = await voiceChannel.join();
   }
 
+  const videoInfo = queue[0];
+  queue.splice(0, 1);
+
+  const audioStream = ytdl(`https://www.youtube.com/watch?v=${videoInfo.videoId}`);
+
+  const volume = db.get('server.volume').value();
   streamDispatcher = audioConnection.playStream(audioStream, { volume });
 
-  db.set('server.musicStoppedTime', null).write();
   setGame(videoInfo.title);
-
   isPlaying = true;
-  queue.splice(0);
 
   streamDispatcher.once('end', async (reason) => {
+    streamDispatcher = null;
+
     if (isPlaying && queue.length > 0) {
       return playNextVideo(message);
     }
 
-    isPlaying = false;
+    await stopPlaying(message);
   });
+
 }
 
-
-export function setVolume(value: number) {
-  const safeValue = Math.max(0, Math.min(1, value));
-
-  volume = safeValue;
-  db.set('server.volume', volume).write();
-}
 
 export function setIsPlaying(value: boolean) {
   isPlaying = value;
 }
 
-export function disconnectAudioChannel() {
-  audioConnection.disconnect();
+export async function stopPlaying(message: Discord.Message) {
+  setGame('');
+  isPlaying = false;
+
+  if (streamDispatcher) streamDispatcher.end();
+  streamDispatcher = null;
+
+  if (audioConnection) audioConnection.disconnect();
   audioConnection = null;
+
+  await message.channel.send('Queue is empty, leaving channel');
 }
