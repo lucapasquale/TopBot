@@ -29,7 +29,7 @@ export async function playlist(cmds: string[], message: Discord.Message) {
     return;
   }
 
-  await addPlaylistToQueue(playlistId);
+  await addPlaylistToQueue(playlistId, message);
 
   if (!isPlaying && queue.length > 0) {
     await playNextVideo(message);

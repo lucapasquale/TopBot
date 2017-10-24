@@ -15,7 +15,7 @@ const youtubeAPI = axios.create({
   },
 });
 
-export default async function (playlistId: string) {
+export default async function (playlistId: string, message: Discord.Message) {
   const { data } = await youtubeAPI.get('playlistItems', {
     params: {
       playlistId,
