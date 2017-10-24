@@ -6,7 +6,7 @@ import crons from './crons';
 
 export default async function (channel: Discord.TextChannel) {
   crons.map(({ fn, interval }) => {
-    fn(channel);
+    // fn(channel);
 
     later.setInterval(() => fn(channel), later.parse.text(interval));
   });

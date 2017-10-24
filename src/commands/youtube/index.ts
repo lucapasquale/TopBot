@@ -1,25 +1,20 @@
 import * as Discord from 'discord.js';
-
-import play from './play';
-import skip from './skip';
-import stop from './stop';
-import volume from './volume';
-import resume from './resume';
-import pause from './pause';
+import * as commands from './commands';
 
 
 export default async function (cmds: string[], message: Discord.Message) {
   let command;
 
   switch (cmds[0]) {
-    case 'play': command = play; break;
-    case 'skip': command = skip; break;
-    case 'stop': command = stop; break;
-    case 'volume': command = volume; break;
-    case 'resume': command = resume; break;
-    case 'pause': command = pause; break;
+    case 'play': command = commands.play; break;
+    case 'playlist': command = commands.playlist; break;
+    case 'skip': command = commands.skip; break;
+    case 'stop': command = commands.stop; break;
+    case 'volume': command = commands.volume; break;
+    case 'resume': command = commands.resume; break;
+    case 'pause': command = commands.pause; break;
 
-    default: command = play; cmds.unshift('');
+    default: command = commands.play; cmds.unshift('');
   }
 
   cmds.shift();
