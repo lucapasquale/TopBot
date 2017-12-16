@@ -1,10 +1,8 @@
 import * as Discord from 'discord.js';
 
-import lol from './lol';
 import economy from './economy';
 import stream from './stream';
 import vapor from './vapor';
-import youtube from './youtube';
 
 
 export default async function (message: Discord.Message) {
@@ -13,10 +11,8 @@ export default async function (message: Discord.Message) {
   let command;
   switch (cmds[0]) {
     case 'economy': command = economy; break;
-    case 'lol': command = lol; break;
     case 'stream': command = stream; break;
     case 'vapor': command = vapor; break;
-    case 'yt': command = youtube; break;
   }
 
   if (command) {
