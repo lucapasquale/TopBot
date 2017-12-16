@@ -19,7 +19,6 @@ export default async function (cmds: string[], message: Discord.Message) {
   const topPosts = data.data.children;
   const randomPost = topPosts[Math.floor(Math.random() * LIMIT)];
 
-  console.log(randomPost);
   await message.channel.send('Investment opportunity of the day', {
     embed: generateEmbed(randomPost),
   });
