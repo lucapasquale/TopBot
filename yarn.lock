@@ -315,6 +315,12 @@ supports-color@^4.0.0:
   dependencies:
     has-flag "^2.0.0"
 
+ts-bayes@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/ts-bayes/-/ts-bayes-1.0.0.tgz#9a6c897ea3789da4c496f7dedddcdf64c6f9bbe7"
+  dependencies:
+    typescript "^2.0.9"
+
 tslib@^1.0.0, tslib@^1.7.1, tslib@^1.8.0:
   version "1.8.1"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.8.1.tgz#6946af2d1d651a7b1863b531d6e5afa41aa44eac"
@@ -378,7 +384,7 @@ tweetnacl@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/tweetnacl/-/tweetnacl-1.0.0.tgz#713d8b818da42068740bf68386d0479e66fc8a7b"
 
-typescript@^2.4.2:
+typescript@^2.0.9, typescript@^2.4.2:
   version "2.6.2"
   resolved "https://registry.npmjs.org/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
 
