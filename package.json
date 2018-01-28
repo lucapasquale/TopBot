@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "pretest": "tsc",
+    "test": "node dist/test.js",
     "lint": "tslint './src/**/*.ts'",
     "prestart": "tsc",
     "start": "node -r dotenv/config dist/index.js"
@@ -21,8 +23,7 @@
     "later": "^1.2.0",
     "lowdb": "^1.0.0",
     "moment": "^2.18.1",
-    "node-opus": "^0.2.7",
-    "ytdl-core": "^0.18.0"
+    "ts-bayes": "^1.0.0"
   },
   "devDependencies": {
     "tslint": "^5.6.0",
