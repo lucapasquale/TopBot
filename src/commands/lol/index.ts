@@ -1,28 +1,20 @@
 import * as Discord from 'discord.js';
-import db from '../../common/db';
 
+import addPlayer from './add-player';
+import removePlayer from './remove-player';
+import team from './team';
 
 export default async function (cmds: string[], message: Discord.Message) {
-  const idsNotInChat = getPlayersNotInChat(message);
-  if (idsNotInChat.length === 0) {
-    return message.channel.send('no one available');
+  let command;
+
+  switch (cmds[0]) {
+    case 'add': command = addPlayer; break;
+    case 'remove': command = removePlayer; break;
+    case 'team': command = team; break;
+
+    default: command = team; cmds.unshift('');
   }
 
-  const mentions = idsNotInChat.map((id: string) => (`<@${id}>`));
-  return message.channel.send(`Precisa-se pro LoL\n${mentions.join(' ')}`);
-}
-
-
-function getPlayersNotInChat(message: Discord.Message) {
-  const allPlayers = db.get('lolPlayerIds').value();
-
-  const voiceMembers = message.member.voiceChannel.members;
-  const voiceIds = voiceMembers.map((vm: Discord.GuildMember) => vm.id);
-
-  return allPlayers.reduce((all: string[], player: string) => {
-    if (!voiceIds.includes(player)) {
-      all.push(player);
-    }
-    return all;
-  }, []);
+  cmds.shift();
+  await command(cmds, message);
 }

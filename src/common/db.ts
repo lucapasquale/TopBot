@@ -5,7 +5,7 @@ const adapter = new fileSync(`${__dirname}/db.json`);
 const db = low(adapter);
 
 
-db.defaults({ streams: [], lolPlayerIds: [] }).write();
+db.defaults({ streams: [], lolPlayers: [] }).write();
 setStreamsDefault(db);
 export default db;
 
@@ -18,7 +18,7 @@ export type Stream = {
 
 export type LolPlayer = {
   id: string,
-  // username: string,
+  username: string,
 };
 
 function setStreamsDefault(db: any) {
