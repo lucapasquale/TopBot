@@ -3,6 +3,10 @@ import db, { LolPlayer } from '../../common/db';
 
 
 export default async function (cmds: string[], message: Discord.Message) {
+  if (!message.member.voiceChannel) {
+    return message.channel.send('Please enter in a voice chat first!');
+  }
+
   const playersNotInChat = getPlayersNotInChat(message);
   if (playersNotInChat.length === 0) {
     return message.channel.send('No one available to play');
