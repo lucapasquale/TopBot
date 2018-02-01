@@ -1,40 +1,31 @@
 import * as Discord from 'discord.js';
 
-import config from './config';
-import crons from './crons';
-import commands from './commands';
+import { startDB } from './common/db';
+import { getCommands, findHandler } from './common/helpers';
+import { startClient } from './common/client';
 
 
-const client = new Discord.Client();
-client.login(config.DISCORD_KEY);
-export default client;
+run();
 
+async function run() {
+  const db = await startDB();
+  const cmds = getCommands(`${__dirname}/cmds`);
 
-client.on('ready', () => {
-  console.log('Bot on!');
+  startClient(handleCommand);
 
-  const { textChannel } = getDefaultChannels(client.channels.array());
-  crons(textChannel as Discord.TextChannel);
-});
+  function handleCommand(message: Discord.Message) {
+    const commandText = message.content.substring(1);
 
-client.on('message', async (message) => {
-  if (message.content.charAt(0) === '$') {
-    await commands(message);
+    const command = findHandler(commandText, cmds);
+    if (!command) {
+      return message.channel.send('Invalid command!');
+    }
+
+    const ctx = {
+      message,
+      db,
+    };
+
+    return command.handler([], ctx);
   }
-});
-
-
-function getDefaultChannels(channels: Discord.Channel[]) {
-  const textChannels: Discord.Channel[] = [];
-  const voiceChannels: Discord.Channel[] = [];
-
-  channels.forEach((ch) => {
-    if (ch.type === 'text') { textChannels.push(ch); }
-    if (ch.type === 'voice') { voiceChannels.push(ch); }
-  });
-
-  return {
-    textChannel: textChannels[0],
-    voiceChannel: voiceChannels[0],
-  };
 }
