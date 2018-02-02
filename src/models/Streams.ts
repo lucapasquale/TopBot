@@ -1,4 +1,4 @@
-import { Model, Column, Table, CreatedAt, UpdatedAt, DeletedAt } from 'sequelize-typescript';
+import { Model, Column, Table } from 'sequelize-typescript';
 
 
 @Table
@@ -11,17 +11,4 @@ export class Streams extends Model<Streams> {
 
   @Column
   online: boolean;
-
-
-  // @CreatedAt
-  // @Column
-  // createdAt: Date;
-
-  // @UpdatedAt
-  // @Column
-  // updatedAt: Date;
-
-  // @DeletedAt
-  // @Column
-  // deletedAt: Date;
 }

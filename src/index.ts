@@ -5,9 +5,9 @@ import { getCommands, findHandler } from './common/helpers';
 import { startClient } from './common/client';
 
 
-run();
+start();
 
-async function run() {
+async function start() {
   const db = await startDB();
   const cmds = getCommands(`${__dirname}/cmds`);
 
@@ -16,7 +16,7 @@ async function run() {
   function handleCommand(message: Discord.Message) {
     const commandText = message.content.substring(1);
 
-    const command = findHandler(commandText, cmds);
+    const { command, args } = findHandler(commandText, cmds);
     if (!command) {
       return message.channel.send('Invalid command!');
     }
@@ -26,6 +26,6 @@ async function run() {
       db,
     };
 
-    return command.handler([], ctx);
+    return command.handler(args, ctx);
   }
 }

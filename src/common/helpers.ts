@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as R from 'ramda';
-import { Command } from '../common/types';
+import { Command } from '../types';
 
 
 export function getCommands(commandsPath: string) {
@@ -38,17 +38,21 @@ function hasHandler(basePath: string, folderName: string): boolean {
 export function findHandler(messageText: string, cmds: Command[]) {
   const tags = messageText.split(' ');
 
-  while (tags.length > 0) {
+  for (let l = tags.length; l >= 1; l -= 1) {
     const command = cmds.find((c: Command) => {
-      return R.equals(c.tag, tags);
+      return R.equals(c.tag, tags.slice(0, l));
     });
 
     if (command) {
-      return command;
+      return {
+        command,
+        args: tags.slice(l),
+      };
     }
-
-    tags.pop();
   }
 
-  return null;
+  return {
+    command: null,
+    args: [],
+  };
 }

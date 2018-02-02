@@ -1,10 +1,10 @@
 import * as Discord from 'discord.js';
-import { Db } from './db';
+import { Db } from './common/db';
 
 
 export type Context = {
-  message: Discord.Message,
-  db: Db,
+  message: Discord.Message;
+  db: Db;
 };
 
 export type Command = {

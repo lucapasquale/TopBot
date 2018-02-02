@@ -2,14 +2,16 @@ import { Sequelize } from 'sequelize-typescript';
 import config from '../config';
 
 import { Streams } from '../models/Streams';
+import { LolPlayer } from '../models/LolPlayer';
 
 
 export type Db = {
-  sequelize: Sequelize,
-  Streams: typeof Streams,
+  sequelize: Sequelize;
+  Streams: typeof Streams;
+  LolPlayer: typeof LolPlayer;
 };
 
-export function startDB(): Db {
+export async function startDB(): Promise<Db> {
   const sequelize = new Sequelize({
     url: config.PG_URI,
     logging: false,
@@ -22,10 +24,12 @@ export function startDB(): Db {
     },
   });
 
-  sequelize.addModels([Streams]);
+  sequelize.addModels([Streams, LolPlayer]);
+  await sequelize.sync();
 
   return {
     sequelize,
     Streams,
+    LolPlayer,
   };
 }
