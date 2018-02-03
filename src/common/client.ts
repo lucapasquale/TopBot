@@ -2,7 +2,7 @@ import * as Discord from 'discord.js';
 
 import config from '../config';
 import { Db, Command } from '../types';
-import { startCrons } from '../crons';
+import { startCrons } from '../cron-jobs';
 import { getMessageAndArgs } from './helpers';
 
 

@@ -2,14 +2,14 @@ import * as Discord from 'discord.js';
 import * as later from 'later';
 
 import { Db, Cron } from '../types';
-import jobs from './jobs';
+import crons from './crons';
 import { getDefaultSettings } from 'http2';
 
 
 export function startCrons(client: Discord.Client, db: Db) {
   const textChannel = getDefaultTextChannel(client.channels.array());
 
-  jobs.map(({ handler, interval }) => {
+  crons.map(({ handler, interval }) => {
     later.setInterval(() => handler(textChannel, db), later.parse.text(interval));
   });
 }
