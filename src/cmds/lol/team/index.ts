@@ -3,7 +3,7 @@ import handler from './handler';
 
 const cmd: Command = {
   handler,
-  tag: ['lol1', 'team'],
+  tag: ['lol', 'team'],
 };
 
 export default cmd;

@@ -10,7 +10,7 @@ export type Context = {
 
 export type Command = {
   tag: string[];
-  handler: (args: string[], message: Context) => Promise<any>;
+  handler: (args: string[], message: Context) => Promise<void>;
 };
 
 export type Cron = {

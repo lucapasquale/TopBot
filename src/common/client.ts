@@ -10,7 +10,6 @@ export async function startClient(db: Db, cmds: Command[]) {
   const client = new Discord.Client();
   client.login(config.DISCORD_KEY);
 
-
   client.on('ready', () => {
     console.log('Bot on!');
 
