@@ -2,29 +2,26 @@ import * as Discord from 'discord.js';
 import * as bluebird from 'bluebird';
 import axios from 'axios';
 
-import db, { Stream } from '../../common/db';
+import { Db } from '../../types';
 import config from '../../config';
 
 
-export default async function (channel: Discord.TextChannel) {
+export default async function (channel: Discord.TextChannel, db: Db) {
   try {
-    const twitchStreams = db.get('streams')
-      .filter({ service: 'twitch' })
-      .values();
+    const twitchStreams = await db.Streams.findAll({
+      where: { service: 'twitch' },
+    });
 
-    await bluebird.each(twitchStreams, async (stream: Stream) => {
+    await bluebird.each(twitchStreams, async (stream) => {
       const { online, data } = await getStreamData(stream.token);
 
       if (stream.online !== online) {
         if (online) {
           const { content, embed } = await createMessage(stream.token, data);
-          channel.send(content, { embed });
+          await channel.send(content, { embed });
         }
 
-        db.get('streams')
-          .find({ token: stream.token, service: 'twitch' })
-          .assign({ online })
-          .write();
+        await stream.update({ online });
       }
     });
   }
@@ -57,19 +54,15 @@ async function createMessage(token: string, streamData: any) {
   const { display_name, profile_image_url } = userData;
 
   const url = `https://go.twitch.tv/${token}`;
-  const content = `**${display_name}** is streaming!\n${url}`;
-
-  const embed = {
-    url,
-    title: display_name,
-    description: `${title}\n**Viewers:** ${viewer_count}`,
-    color: 0x6441A4,
-    thumbnail: {
-      url: profile_image_url,
-    },
-  };
 
   return {
-    content, embed,
+    content: `**${display_name}** is streaming!\n${url}`,
+    embed: {
+      url,
+      title: display_name,
+      description: `${title}\n**Viewers:** ${viewer_count}`,
+      color: 0x6441A4,
+      thumbnail: { url: profile_image_url },
+    },
   };
 }

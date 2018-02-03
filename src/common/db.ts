@@ -1,35 +1,35 @@
-const low = require('lowdb');
-const fileSync = require('lowdb/adapters/FileSync');
+import { Sequelize } from 'sequelize-typescript';
+import config from '../config';
 
-const adapter = new fileSync(`${__dirname}/db.json`);
-const db = low(adapter);
-
-
-db.defaults({ streams: [], lolPlayers: [] }).write();
-setStreamsDefault(db);
-export default db;
+import { Streams } from '../models/Streams';
+import { LolPlayer } from '../models/LolPlayer';
 
 
-export type Stream = {
-  token: string,
-  service: 'twitch' | 'mixer',
-  online: boolean,
+export type Db = {
+  sequelize: Sequelize;
+  Streams: typeof Streams;
+  LolPlayer: typeof LolPlayer;
 };
 
-export type LolPlayer = {
-  id: string,
-  username: string,
-};
-
-function setStreamsDefault(db: any) {
-  const existingStreams = db.get('streams').value();
-
-  const offlineStreams = existingStreams.map((st: Stream) => {
-    return {
-      ...st,
-      online: false,
-    };
+export async function startDB(): Promise<Db> {
+  const sequelize = new Sequelize({
+    url: config.PG_URI,
+    logging: false,
+    define: {
+      timestamps: true,
+      paranoid: true,
+      createdAt: 'createdAt',
+      updatedAt: 'updatedAt',
+      deletedAt: 'deletedAt',
+    },
   });
 
-  db.set('streams', offlineStreams).write();
+  sequelize.addModels([Streams, LolPlayer]);
+  await sequelize.sync();
+
+  return {
+    sequelize,
+    Streams,
+    LolPlayer,
+  };
 }

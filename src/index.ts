@@ -1,40 +1,15 @@
 import * as Discord from 'discord.js';
 
-import config from './config';
-import crons from './crons';
-import commands from './commands';
+import { startDB } from './common/db';
+import { getAllCommands } from './common/helpers';
+import { startClient } from './common/client';
 
 
-const client = new Discord.Client();
-client.login(config.DISCORD_KEY);
-export default client;
+start();
 
+async function start() {
+  const db = await startDB();
+  const cmds = getAllCommands(`${__dirname}/cmds`);
 
-client.on('ready', () => {
-  console.log('Bot on!');
-
-  const { textChannel } = getDefaultChannels(client.channels.array());
-  crons(textChannel as Discord.TextChannel);
-});
-
-client.on('message', async (message) => {
-  if (message.content.charAt(0) === '$') {
-    await commands(message);
-  }
-});
-
-
-function getDefaultChannels(channels: Discord.Channel[]) {
-  const textChannels: Discord.Channel[] = [];
-  const voiceChannels: Discord.Channel[] = [];
-
-  channels.forEach((ch) => {
-    if (ch.type === 'text') { textChannels.push(ch); }
-    if (ch.type === 'voice') { voiceChannels.push(ch); }
-  });
-
-  return {
-    textChannel: textChannels[0],
-    voiceChannel: voiceChannels[0],
-  };
+  await startClient(db, cmds);
 }

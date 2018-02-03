@@ -3,7 +3,7 @@
       "rootDir": "./src",
       "outDir": "dist",
       "module": "commonjs",
-      "target": "es5",
+      "target": "es6",
       "lib": [
         "es6",
         "es2016"
@@ -15,7 +15,9 @@
       "noFallthroughCasesInSwitch": true,
       "noImplicitAny": true,
       "noImplicitReturns": true,
-      "noImplicitThis": true
+      "noImplicitThis": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true
     },
     "include": [
       "src/**/*"
