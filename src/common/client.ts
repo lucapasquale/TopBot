@@ -1,33 +1,39 @@
 import * as Discord from 'discord.js';
+
 import config from '../config';
+import { Db, Command } from '../types';
+import { startCrons } from '../crons';
+import { parseCommandText, getDefaultChannels } from './helpers';
 
 
-export function startClient(messageParser: Function) {
+export async function startClient(db: Db, cmds: Command[]) {
   const client = new Discord.Client();
   client.login(config.DISCORD_KEY);
+
 
   client.on('ready', () => {
     console.log('Bot on!');
 
-    // const { textChannel } = getDefaultChannels(client.channels.array());
-    // crons(textChannel as Discord.TextChannel);
+    const defaultChannels = getDefaultChannels(client.channels.array());
+    startCrons(defaultChannels.text, db);
   });
 
-  client.on('message', (message) => {
-    if (message.content.charAt(0) !== '$') {
+  client.on('message', async (message) => {
+    const { command, args } = parseMessage(message.content, cmds);
+    if (!command) {
       return;
     }
 
-    return messageParser(message);
+    const ctx = { message, db };
+    await command.handler(args, ctx);
   });
-
-  return client;
 }
 
 
-function getDefaultChannels(channels: Discord.Channel[]) {
-  return {
-    textChannel: channels.find((c: Discord.Channel) => c.type === 'text'),
-    voiceChannel: channels.find((c: Discord.Channel) => c.type === 'voice'),
-  };
+function parseMessage(message: string, commands: Command[]) {
+  if (message.charAt(0) !== '$') {
+    return { command: null, args: [] };
+  }
+
+  return parseCommandText(message, commands);
 }

@@ -1,10 +1,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as R from 'ramda';
+import * as Discord from 'discord.js';
 import { Command } from '../types';
 
 
-export function getCommands(commandsPath: string) {
+export function getAllCommands(commandsPath: string) {
   const cmds = [] as any[];
 
   fs.readdirSync(commandsPath)
@@ -35,8 +36,9 @@ function hasHandler(basePath: string, folderName: string): boolean {
 }
 
 
-export function findHandler(messageText: string, cmds: Command[]) {
-  const tags = messageText.split(' ');
+export function parseCommandText(messageText: string, cmds: Command[]) {
+  const removedPreffix = messageText.substring(1);
+  const tags = removedPreffix.split(' ');
 
   for (let l = tags.length; l >= 1; l -= 1) {
     const command = cmds.find((c: Command) => {
@@ -54,5 +56,12 @@ export function findHandler(messageText: string, cmds: Command[]) {
   return {
     command: null,
     args: [],
+  };
+}
+
+export function getDefaultChannels(channels: Discord.Channel[]) {
+  return {
+    text: channels.find((c: Discord.Channel) => c.type === 'text') as Discord.TextChannel,
+    voice: channels.find((c: Discord.Channel) => c.type === 'voice') as Discord.VoiceChannel,
   };
 }
