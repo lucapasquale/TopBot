@@ -11,14 +11,11 @@ export default async function (args: string[], ctx: Context) {
     return;
   }
 
-  if (!service || !availableServices.includes(service.toLowerCase())) {
-    await ctx.message.channel.send(`
-      Invalid service, please use one of these: **${availableServices.join(', ')}**`);
-    return;
-  }
-
   await ctx.db.Streams.findCreateFind({
-    where: { token, service },
+    where: {
+      token,
+      service: service || 'twitch',
+    },
     defaults: { online: false },
   });
 
