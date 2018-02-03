@@ -6,12 +6,15 @@ import { startCrons } from '../cron-jobs';
 import { getMessageAndArgs } from './helpers';
 
 
+const client = new Discord.Client();
+
 export async function startClient(db: Db, cmds: Command[]) {
-  const client = new Discord.Client();
-  client.login(config.DISCORD_KEY);
+  await client.login(config.DISCORD_KEY);
 
   client.on('ready', () => {
     console.log('Bot on!');
+    client.user.setGame('$help');
+
     startCrons(client, db);
   });
 
@@ -21,7 +24,7 @@ export async function startClient(db: Db, cmds: Command[]) {
       return;
     }
 
-    const ctx = { message, db };
+    const ctx = { message, db, cmds };
     await command.handler(args, ctx);
   });
 }

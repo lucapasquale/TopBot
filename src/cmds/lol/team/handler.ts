@@ -14,9 +14,9 @@ export default async function (args: string[], ctx: Context) {
   }
 
   const mentions = playersNotInChat.map(p => (`<@${p.id}>`));
-  const playersNeeded = args[0] ? `de ${args[0]}` : '';
+  const playersNeeded = args[0] ? `${args[0]} people` : 'People';
 
-  await ctx.message.channel.send(`Precisa-se ${playersNeeded} pro LoL\n${mentions.join(' ')}`);
+  await ctx.message.channel.send(`${playersNeeded} are needed for LoL\n${mentions.join(' ')}`);
 }
 
 
