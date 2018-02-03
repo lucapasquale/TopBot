@@ -36,32 +36,23 @@ function hasHandler(basePath: string, folderName: string): boolean {
 }
 
 
-export function parseCommandText(messageText: string, cmds: Command[]) {
-  const removedPreffix = messageText.substring(1);
+export function getMessageAndArgs(message: string, commands: Command[]) {
+  if (message.charAt(0) !== '$') {
+    return { command: null, args: [] };
+  }
+
+  const removedPreffix = message.substring(1);
   const tags = removedPreffix.split(' ');
 
   for (let l = tags.length; l >= 1; l -= 1) {
-    const command = cmds.find((c: Command) => {
+    const command = commands.find((c: Command) => {
       return R.equals(c.tag, tags.slice(0, l));
     });
 
     if (command) {
-      return {
-        command,
-        args: tags.slice(l),
-      };
+      return { command, args: tags.slice(l) };
     }
   }
 
-  return {
-    command: null,
-    args: [],
-  };
-}
-
-export function getDefaultChannels(channels: Discord.Channel[]) {
-  return {
-    text: channels.find((c: Discord.Channel) => c.type === 'text') as Discord.TextChannel,
-    voice: channels.find((c: Discord.Channel) => c.type === 'voice') as Discord.VoiceChannel,
-  };
+  return { command: null, args: [] };
 }
