@@ -1,4 +1,5 @@
 import { Context } from '../../../types';
+import { LolPlayer } from '../../../models/LolPlayer';
 
 
 export default async function (args: string[], ctx: Context) {
@@ -13,7 +14,7 @@ export default async function (args: string[], ctx: Context) {
     return;
   }
 
-  const mentions = playersNotInChat.map(p => (`<@${p.id}>`));
+  const mentions = playersNotInChat.map(p => (`<@${p.userId}>`));
   const playersNeeded = args[0] ? `${args[0]} people` : 'People';
 
   await ctx.message.channel.send(`${playersNeeded} are needed for LoL\n${mentions.join(' ')}`);
@@ -26,7 +27,7 @@ async function getPlayersNotInChat(ctx: Context) {
   const voiceMembers = ctx.message.member.voiceChannel.members;
   const voiceIds = voiceMembers.map(vm => vm.id);
 
-  return allPlayers.reduce((all, player) => {
+  return allPlayers.reduce((all: LolPlayer[], player) => {
     if (!voiceIds.includes(player.id)) {
       all.push(player);
     }
