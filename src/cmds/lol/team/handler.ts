@@ -28,7 +28,7 @@ async function getPlayersNotInChat(ctx: Context) {
   const voiceIds = voiceMembers.map(vm => vm.id);
 
   return allPlayers.reduce((all: LolPlayer[], player) => {
-    if (!voiceIds.includes(player.id)) {
+    if (!voiceIds.includes(player.userId)) {
       all.push(player);
     }
     return all;

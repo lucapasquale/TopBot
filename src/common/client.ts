@@ -9,11 +9,11 @@ import { getMessageAndArgs } from './helpers';
 const client = new Discord.Client();
 
 export async function startClient(db: Db, cmds: Command[]) {
-  await client.login(config.DISCORD_KEY);
+  client.login(config.DISCORD_KEY);
 
-  client.on('ready', () => {
+  client.on('ready', async () => {
     console.log('Bot on!');
-    client.user.setGame('$help');
+    await client.user.setActivity('$help');
 
     startCrons(client, db);
   });

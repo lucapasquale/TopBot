@@ -4,26 +4,19 @@ import axios from 'axios';
 import { Db } from '../../types';
 
 
-export default async function (channel: Discord.TextChannel, db: Db) {
-  try {
-    const { data } = await redditApi.get('r/MemeEconomy/top.json', {
-      params: {
-        t: 'day',
-        limit: 10,
-      },
-    });
-
-    const topPosts = data.data.children;
-    const randomPost = topPosts[Math.floor(Math.random() * 10)];
-
-    const { content, embed } = generateMessage(randomPost);
-    await channel.send(content, { embed });
-  }
-  catch (e) { }
-}
-
-
 const redditApi = axios.create({ baseURL: 'https://www.reddit.com' });
+
+export default async function (channel: Discord.TextChannel, db: Db) {
+  const { data } = await redditApi.get('r/MemeEconomy/top.json', {
+    params: { t: 'day', limit: 10 },
+  });
+
+  const topPosts = data.data.children;
+  const randomPost = topPosts[Math.floor(Math.random() * 10)];
+
+  const { content, embed } = generateMessage(randomPost);
+  await channel.send(content, { embed });
+}
 
 function generateMessage(post: any) {
   const { title, preview, author, permalink } = post.data;

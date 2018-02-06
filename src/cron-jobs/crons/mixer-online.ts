@@ -5,30 +5,26 @@ import axios from 'axios';
 import { Db } from '../../types';
 
 
-export default async function handler(channel: Discord.TextChannel, db: Db) {
-  try {
-    const mixerStreams = await db.Streams.findAll({
-      where: { service: 'mixer' },
-    });
-
-    await bluebird.each(mixerStreams, async (stream) => {
-      const { online, data } = await getStreamData(stream.token);
-
-      if (stream.online !== online) {
-        if (online) {
-          const { content, embed } = createMessage(stream.token, data);
-          await channel.send(content, { embed });
-        }
-
-        await stream.update({ online });
-      }
-    });
-  }
-  catch (e) { }
-}
-
-
 const mixerRequest = axios.create({ baseURL: 'https://mixer.com/api/v1' });
+
+export default async function handler(channel: Discord.TextChannel, db: Db) {
+  const mixerStreams = await db.Streams.findAll({
+    where: { service: 'mixer' },
+  });
+
+  await bluebird.each(mixerStreams, async (stream) => {
+    const { online, data } = await getStreamData(stream.token);
+
+    if (stream.online !== online) {
+      if (online) {
+        const { content, embed } = createMessage(stream.token, data);
+        await channel.send(content, { embed });
+      }
+
+      await stream.update({ online });
+    }
+  });
+}
 
 async function getStreamData(token: string) {
   const { data } = await mixerRequest.get(`channels/${token}/details`);

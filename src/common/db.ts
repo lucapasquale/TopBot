@@ -25,11 +25,20 @@ export async function startDB(): Promise<Db> {
   });
 
   sequelize.addModels([Streams, LolPlayer]);
+
   await sequelize.sync();
+  await intializeTables();
 
   return {
     sequelize,
     Streams,
     LolPlayer,
   };
+}
+
+
+async function intializeTables() {
+  await Streams.update({
+    online: false,
+  }, { where: {} });
 }
