@@ -12,25 +12,25 @@
   },
   "dependencies": {
     "@types/bluebird": "^3.5.20",
-    "@types/dotenv": "^4.0.1",
+    "@types/dotenv": "^4.0.3",
     "@types/later": "^1.2.3",
-    "@types/node": "^9.4.0",
-    "@types/ramda": "^0.25.17",
-    "axios": "^0.17.1",
+    "@types/node": "^10.1.0",
+    "@types/ramda": "^0.25.28",
+    "axios": "^0.18.0",
     "bluebird": "^3.5.1",
-    "discord.js": "^11.3.0",
-    "dotenv": "^5.0.0",
+    "discord.js": "^11.3.2",
+    "dotenv": "^5.0.1",
     "later": "^1.2.0",
-    "moment": "^2.20.1",
-    "pg": "^7.4.1",
+    "moment": "^2.22.1",
+    "pg": "^7.4.3",
     "ramda": "^0.25.0",
     "reflect-metadata": "^0.1.12",
-    "sequelize": "^4.32.3",
-    "sequelize-typescript": "^0.6.2"
+    "sequelize": "^4.37.7",
+    "sequelize-typescript": "^0.6.4"
   },
   "devDependencies": {
-    "tslint": "^5.9.1",
-    "tslint-config-airbnb": "^5.5.0",
-    "typescript": "^2.7.1"
+    "tslint": "^5.10.0",
+    "tslint-config-airbnb": "^5.8.0",
+    "typescript": "^2.8.3"
   }
 }

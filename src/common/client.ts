@@ -27,4 +27,8 @@ export async function startClient(db: Db, cmds: Command[]) {
     const ctx = { message, db, cmds };
     await command.handler(args, ctx);
   });
+
+  client.on('error', (err) => {
+    console.error(err);
+  });
 }
