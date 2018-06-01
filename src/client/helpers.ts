@@ -5,7 +5,7 @@ import * as Discord from 'discord.js';
 import { Command } from '../types';
 
 export function getAllCommands(commandsPath: string): Command[] {
-  const cmds = [] as any[];
+  const cmds = [] as string[];
 
   fs.readdirSync(commandsPath)
     .forEach((folder) => {

@@ -1,26 +1,25 @@
-import * as Discord from 'discord.js';
-// import { Db } from './common/db';
+import { Message, TextChannel } from 'discord.js';
+import { Database } from './database';
 
-// export type Db = Db;
+export type Database = Database;
 
 export type Context = {
-  message: Discord.Message;
-  db: any;
-  cmds: Command[];
-};
-
-export type Doc = {
-  description: string;
-  args: string[];
+  message: Message;
+  db: Database;
 };
 
 export type Command = {
-  doc?: Doc,
   tag: string[];
   handler: (args: string[], message: Context) => Promise<void>;
+  doc?: CommandDoc,
+};
+
+export type CommandDoc = {
+  args: string[];
+  description: string;
 };
 
 export type Cron = {
-  handler: (textChannel: Discord.TextChannel, db: any) => Promise<void>;
   interval: string;
+  handler: (textChannel: TextChannel, db: Database) => Promise<void>;
 };

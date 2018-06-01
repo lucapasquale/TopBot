@@ -1082,6 +1082,6 @@ specifiers:
   pg: ^7.4.3
   ramda: ^0.25.0
   tslint: ^5.10.0
-  tslint-config-airbnb: ^5.8.0
+  tslint-config-airbnb: ^5.9.2
   typeorm: ^0.2.6
-  typescript: ^2.9.0
+  typescript: ^2.9.1
