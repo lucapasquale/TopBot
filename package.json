@@ -7,7 +7,7 @@
     "pretest": "tsc",
     "test": "node dist/test.js",
     "lint": "tslint './src/**/*.ts'",
-    "prestart": "tsc",
+    "prestart": "rm -rf /dist && tsc",
     "start": "node -r dotenv/config dist/index.js"
   },
   "dependencies": {
@@ -24,13 +24,11 @@
     "moment": "^2.22.1",
     "pg": "^7.4.3",
     "ramda": "^0.25.0",
-    "reflect-metadata": "^0.1.12",
-    "sequelize": "^4.37.7",
-    "sequelize-typescript": "^0.6.4"
+    "typeorm": "^0.2.6"
   },
   "devDependencies": {
     "tslint": "^5.10.0",
     "tslint-config-airbnb": "^5.8.0",
-    "typescript": "^2.8.3"
+    "typescript": "^2.9.0"
   }
 }

@@ -1,11 +1,11 @@
 import * as Discord from 'discord.js';
-import { Db } from './common/db';
+// import { Db } from './common/db';
 
-export type Db = Db;
+// export type Db = Db;
 
 export type Context = {
   message: Discord.Message;
-  db: Db;
+  db: any;
   cmds: Command[];
 };
 
@@ -21,6 +21,6 @@ export type Command = {
 };
 
 export type Cron = {
-  handler: (textChannel: Discord.TextChannel, db: Db) => Promise<void>;
+  handler: (textChannel: Discord.TextChannel, db: any) => Promise<void>;
   interval: string;
 };

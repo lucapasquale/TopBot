@@ -4,8 +4,7 @@ import * as R from 'ramda';
 import * as Discord from 'discord.js';
 import { Command } from '../types';
 
-
-export function getAllCommands(commandsPath: string) {
+export function getAllCommands(commandsPath: string): Command[] {
   const cmds = [] as any[];
 
   fs.readdirSync(commandsPath)
@@ -34,7 +33,6 @@ function hasHandler(basePath: string, folderName: string): boolean {
   const commandPath = path.join(basePath, folderName, 'handler.js');
   return fs.existsSync(commandPath);
 }
-
 
 export function getMessageAndArgs(message: string, commands: Command[]) {
   if (message.charAt(0) !== '$') {
