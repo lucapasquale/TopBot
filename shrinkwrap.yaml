@@ -9,7 +9,6 @@ dependencies:
   discord.js: 11.3.2
   dotenv: 5.0.1
   later: 1.2.0
-  moment: 2.22.1
   pg: 7.4.3
   ramda: 0.25.0
   typeorm: 0.2.6
@@ -507,10 +506,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
-  /moment/2.22.1:
-    dev: false
-    resolution:
-      integrity: sha512-shJkRTSebXvsVqk56I+lkb2latjBs8I+pc2TzWc545y2iFnSjm7Wg0QMh+ZWcdSLQyGEau5jI8ocnmkyTgr9YQ==
   /ms/2.0.0:
     dev: false
     resolution:
@@ -1078,7 +1073,6 @@ specifiers:
   discord.js: ^11.3.2
   dotenv: ^5.0.1
   later: ^1.2.0
-  moment: ^2.22.1
   pg: ^7.4.3
   ramda: ^0.25.0
   tslint: ^5.10.0
