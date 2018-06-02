@@ -11,7 +11,7 @@ export class LolPlayer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   userId: string;
 
   @Column()

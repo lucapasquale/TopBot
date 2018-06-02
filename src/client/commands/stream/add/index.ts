@@ -6,7 +6,6 @@ const cmd: Command = {
   tag: ['stream', 'add'],
   doc: {
     args: ['[stream_name]', '(twitch | mixer)'],
-
     description: 'Start receiving notifications when *stream_name* becomes'
     + ' online on *twitch* or *mixer*. Default is Twitch',
   },
