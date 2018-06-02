@@ -17,9 +17,16 @@ export async function startDatabase() {
     entities: [`${__dirname}/entities/*.js`],
   });
 
-  return {
+  const database = {
     connection,
     LolPlayer: connection.getCustomRepository(LolPlayerRepository),
     Stream: connection.getCustomRepository(StreamRepository),
   };
+
+  initializeDatabase(database);
+  return database;
+}
+
+async function initializeDatabase(db: Database) {
+  await db.Stream.update({}, { online: false });
 }
