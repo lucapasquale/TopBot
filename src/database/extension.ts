@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { LolPlayer } from './entities/LolPlayer';
-import { Stream } from './entities/Stream';
+import { LolPlayer } from './entities/lol-player';
+import { Stream } from './entities/stream';
 
 @EntityRepository(LolPlayer)
 export class LolPlayerRepository extends Repository<LolPlayer> {

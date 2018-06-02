@@ -20,7 +20,7 @@ export type CommandDoc = {
   description: string;
 };
 
-export type Cron = {
+export type Cronjob = {
   interval: string;
   handler: (textChannel: TextChannel, db: Database) => Promise<void>;
 };

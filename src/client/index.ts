@@ -1,9 +1,10 @@
 import { equals } from 'ramda';
 import { Client } from 'discord.js';
 
-import config from '../config';
 import { Database, Command } from '../types';
+import { startCrons } from './crons';
 import { getAllCommands } from './helpers';
+import config from '../config';
 
 const client = new Client();
 const commands = getAllCommands(`${__dirname}/commands`);
@@ -15,7 +16,7 @@ export async function startClient(db: Database) {
     console.log('Bot on!');
 
     await client.user.setActivity(`${config.CMD_PREFIX}help`);
-    // startCrons(client, db);
+    startCrons(client, db);
   });
 
   client.on('message', async (message) => {

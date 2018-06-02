@@ -1,7 +1,5 @@
-import * as R from 'ramda';
-import { GuildMember } from 'discord.js';
 import { Context } from '../../../../types';
-import { LolPlayer } from '../../../../database/entities/LolPlayer';
+import { LolPlayer } from '../../../../database/entities/lol-player';
 
 export default async function (args: string[], ctx: Context) {
   const [playersNeeded] = args;

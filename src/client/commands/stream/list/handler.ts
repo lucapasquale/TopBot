@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { Context } from '../../../../types';
-import { Stream } from '../../../../database/entities/Stream';
+import { Stream } from '../../../../database/entities/stream';
 
 export default async function (_: string[], ctx: Context) {
   const streams = await ctx.db.Stream.find({
