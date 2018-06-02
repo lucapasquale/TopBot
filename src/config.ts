@@ -1,4 +1,5 @@
 export default {
+  PG_URI: process.env.PG_URI,
   PG_DB: process.env.PG_DB,
   PG_HOST: process.env.PG_HOST,
   PG_USER: process.env.PG_USER,

@@ -4,8 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "pretest": "tsc",
-    "test": "node dist/test.js",
     "lint": "tslint './src/**/*.ts'",
     "prestart": "rm -rf /dist && tsc",
     "start": "node -r dotenv/config dist/index.js"
@@ -13,9 +11,9 @@
   "dependencies": {
     "@types/bluebird": "^3.5.20",
     "@types/dotenv": "^4.0.3",
-    "@types/later": "^1.2.3",
-    "@types/node": "^10.1.0",
-    "@types/ramda": "^0.25.28",
+    "@types/later": "^1.2.4",
+    "@types/node": "^10.3.0",
+    "@types/ramda": "^0.25.32",
     "axios": "^0.18.0",
     "bluebird": "^3.5.1",
     "discord.js": "^11.3.2",

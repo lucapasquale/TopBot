@@ -13,11 +13,7 @@ export type Database = {
 export async function startDatabase() {
   const connection = await createConnection({
     type: 'postgres',
-    port: 5432,
-    host: config.PG_HOST,
-    username: config.PG_USER,
-    password: config.PG_PASS,
-    database: config.PG_DB,
+    url: config.PG_URI,
     synchronize: true,
     entities: [LolPlayer, Stream],
   });

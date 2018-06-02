@@ -1,5 +1,6 @@
 import {
   Entity,
+  Index,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
@@ -7,6 +8,7 @@ import {
 } from 'typeorm';
 
 @Entity()
+@Index(['token', 'service'], { unique: true })
 export class Stream {
   @PrimaryGeneratedColumn()
   id: number;
@@ -14,10 +16,14 @@ export class Stream {
   @Column()
   token: string;
 
-  @Column()
-  service: 'twitch' | 'mixer';
+  @Column({
+    type: 'enum',
+    enum: ['twitch', 'mixer'],
+    default: 'twitch',
+  })
+  service: string;
 
-  @Column()
+  @Column({ default: false })
   online: boolean;
 
   @CreateDateColumn()
