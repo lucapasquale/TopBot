@@ -24,7 +24,7 @@ export async function startClient(db: Database) {
     }
 
     try {
-      await command.handler(args, { message, db });
+      await command.handler(args, { message, db, cmds });
     } catch (error) {
       console.log('Error trying to execute command', { message, error });
     }
