@@ -1,7 +1,5 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as R from 'ramda';
-import * as Discord from 'discord.js';
 import { Command } from '../types';
 
 export function getAllCommands(commandsPath: string): Command[] {
@@ -32,25 +30,4 @@ export function getAllCommands(commandsPath: string): Command[] {
 function hasHandler(basePath: string, folderName: string): boolean {
   const commandPath = path.join(basePath, folderName, 'handler.js');
   return fs.existsSync(commandPath);
-}
-
-export function getMessageAndArgs(message: string, commands: Command[]) {
-  if (message.charAt(0) !== '$') {
-    return { command: null, args: [] };
-  }
-
-  const removedPreffix = message.substring(1);
-  const tags = removedPreffix.split(' ');
-
-  for (let l = tags.length; l >= 1; l -= 1) {
-    const command = commands.find((c: Command) => {
-      return R.equals(c.tag, tags.slice(0, l));
-    });
-
-    if (command) {
-      return { command, args: tags.slice(l) };
-    }
-  }
-
-  return { command: null, args: [] };
 }

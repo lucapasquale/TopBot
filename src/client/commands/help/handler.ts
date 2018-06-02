@@ -1,8 +1,7 @@
-import * as R from 'ramda';
 import { Context, Command } from '../../../types';
 
 export default async function (_: string[], ctx: Context) {
-  const cmdsWithDoc = ctx.cmds.filter(c => c.doc);
+  const cmdsWithDoc = ctx.commands.filter(cmd => cmd.doc);
 
   const { embed } = generateMessage(cmdsWithDoc);
   await ctx.message.channel.send({ embed });

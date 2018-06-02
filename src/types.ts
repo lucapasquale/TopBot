@@ -6,7 +6,7 @@ export type Database = Database;
 export type Context = {
   message: Message;
   db: Database;
-  cmds: Command[];
+  commands: Command[];
 };
 
 export type Command = {
