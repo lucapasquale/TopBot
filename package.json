@@ -7,7 +7,7 @@
     "lint": "tslint --project tsconfig.json './src/**/*.ts'",
     "prestart": "rm -rf /dist && tsc",
     "dev": "node -r dotenv/config dist/index.js",
-    "start": "npm dev | pino-tee warn ./warn-logs > ./all-logs"
+    "start": "npm run dev | pino-tee warn ./warn.log > ./all.log"
   },
   "dependencies": {
     "@types/bluebird": "^3.5.20",

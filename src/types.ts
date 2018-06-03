@@ -5,7 +5,7 @@ import { Database } from './database';
 export type Logger = Logger;
 export type Database = Database;
 
-type BaseContext = {
+export type BaseContext = {
   logger: Logger;
   db: Database;
   commands: Command[];
