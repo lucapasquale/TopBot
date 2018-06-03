@@ -1,6 +1,6 @@
-import { Context, Command } from '../../../types';
+import { CommandCtx, Command } from '../../../types';
 
-export default async function (_: string[], ctx: Context) {
+export default async function (_: string[], ctx: CommandCtx) {
   const cmdsWithDoc = ctx.commands.filter(cmd => cmd.doc);
 
   const { embed } = generateMessage(cmdsWithDoc);

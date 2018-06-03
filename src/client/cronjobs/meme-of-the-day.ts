@@ -1,9 +1,9 @@
-import { TextChannel } from 'discord.js';
+import { CronCtx } from '../../types';
 import axios from 'axios';
 
 const redditApi = axios.create({ baseURL: 'https://www.reddit.com' });
 
-export default async function (channel: TextChannel) {
+export default async function (ctx: CronCtx) {
   const { data } = await redditApi.get('r/MemeEconomy/top.json', {
     params: { t: 'day', limit: 10 },
   });
@@ -12,7 +12,7 @@ export default async function (channel: TextChannel) {
   const randomPost = topPosts[Math.floor(Math.random() * 10)];
 
   const { content, embed } = generateMessage(randomPost);
-  await channel.send(content, { embed });
+  await ctx.channel.send(content, { embed });
 }
 
 function generateMessage(post: any) {

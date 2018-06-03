@@ -1,6 +1,6 @@
-import { Context } from '../../../../types';
+import { CommandCtx } from '../../../../types';
 
-export default async function (args: string[], ctx: Context) {
+export default async function (args: string[], ctx: CommandCtx) {
   const [token] = args;
 
   if (!token) {

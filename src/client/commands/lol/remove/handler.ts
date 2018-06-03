@@ -1,6 +1,6 @@
-import { Context } from '../../../../types';
+import { CommandCtx } from '../../../../types';
 
-export default async function (_: string[], ctx: Context) {
+export default async function (_: string[], ctx: CommandCtx) {
   const { id, username } = ctx.message.author;
 
   await ctx.db.LolPlayer.delete({ userId: id });

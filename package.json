@@ -21,7 +21,8 @@
     "later": "^1.2.0",
     "pg": "^7.4.3",
     "ramda": "^0.25.0",
-    "typeorm": "^0.2.6"
+    "typeorm": "^0.2.6",
+    "winston": "^3.0.0-rc6"
   },
   "devDependencies": {
     "tslint": "^5.10.0",

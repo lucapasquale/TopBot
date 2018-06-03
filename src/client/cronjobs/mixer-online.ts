@@ -1,24 +1,22 @@
-import { TextChannel } from 'discord.js';
 import * as bluebird from 'bluebird';
 import axios from 'axios';
-
-import { Database } from '../../../types';
+import { CronCtx } from '../../types';
 
 const mixerRequest = axios.create({ baseURL: 'https://mixer.com/api/v1' });
 
-export default async function handler(channel: TextChannel, db: Database) {
-  const mixerStreams = await db.Stream.find({ service: 'mixer' });
+export default async function handler(ctx: CronCtx) {
+  const mixerStreams = await ctx.db.Stream.find({ service: 'mixer' });
 
-  await bluebird.each(mixerStreams, async (stream) => {
+  await bluebird.map(mixerStreams, async (stream) => {
     const { online, data } = await getStreamData(stream.token);
 
     if (stream.online !== online) {
       if (online) {
         const { content, embed } = createMessage(stream.token, data);
-        await channel.send(content, { embed });
+        await ctx.channel.send(content, { embed });
       }
 
-      await db.Stream.update(stream.id, { online });
+      await ctx.db.Stream.update(stream.id, { online });
     }
   });
 }
