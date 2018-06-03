@@ -5,20 +5,27 @@ import { BaseContext } from '../types';
 import config from '../config';
 
 export default async function (message: Discord.Message, baseCtx: BaseContext) {
-  if (message.author.bot || message.content.charAt(0) !== config.CMD_PREFIX) {
+  const { content, author } = message;
+
+  if (author.bot || content.charAt(0) !== config.CMD_PREFIX) {
     return;
   }
 
-  const { command, args } = getCommandAndArgs(baseCtx, message.content);
+  const { command, args } = getCommandAndArgs(baseCtx, content);
   if (!command) return;
 
   try {
+    baseCtx.log.debug('executing command', { content, author: author.username });
     await command.handler(args, { ...baseCtx, message });
-  } catch (error) {
-    console.log('Error trying to execute command', {
-      error,
-      content: message.content,
-      author: message.author,
+  }
+  catch (error) {
+    baseCtx.log.error('failed to execute command', {
+      content,
+      author: author.username,
+      error: {
+        message: error.message,
+        stack: error.stack,
+      },
     });
   }
 }

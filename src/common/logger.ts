@@ -2,6 +2,8 @@ import * as winston from 'winston';
 
 export function createLogger() {
   const logger = winston.createLogger({
+    level: 'debug',
+
     format: winston.format.combine(
       winston.format.colorize(),
       winston.format.json(),
