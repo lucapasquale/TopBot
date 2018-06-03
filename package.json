@@ -6,15 +6,13 @@
   "scripts": {
     "lint": "tslint --project tsconfig.json './src/**/*.ts'",
     "prestart": "rm -rf /dist && tsc",
-    "dev": "node -r dotenv/config dist/index.js",
-    "start": "npm run dev | pino-tee warn ./warn.log > ./all.log"
+    "start": "node -r dotenv/config dist/index.js"
   },
   "dependencies": {
     "@types/bluebird": "^3.5.20",
     "@types/dotenv": "^4.0.3",
     "@types/later": "^1.2.4",
     "@types/node": "^10.3.0",
-    "@types/pino": "^4.16.0",
     "@types/ramda": "^0.25.32",
     "axios": "^0.18.0",
     "bluebird": "^3.5.1",
@@ -22,9 +20,9 @@
     "dotenv": "^5.0.1",
     "later": "^1.2.0",
     "pg": "^7.4.3",
-    "pino": "^4.17.3",
     "ramda": "^0.25.0",
-    "typeorm": "^0.2.6"
+    "typeorm": "^0.2.6",
+    "winston": "^3.0.0-rc6"
   },
   "devDependencies": {
     "tslint": "^5.10.0",

@@ -13,19 +13,15 @@ export default async function handler(ctx: CronCtx) {
   const twitchStreams = await ctx.db.Stream.find({ service: 'twitch' });
 
   await bluebird.each(twitchStreams, async (stream) => {
-    try {
-      const { online, data } = await getStreamData(stream.token);
+    const { online, data } = await getStreamData(stream.token);
 
-      if (stream.online !== online) {
-        if (online) {
-          const { content, embed } = await createMessage(stream.token, data);
-          await ctx.channel.send(content, { embed });
-        }
-
-        await ctx.db.Stream.update(stream.id, { online });
+    if (stream.online !== online) {
+      if (online) {
+        const { content, embed } = await createMessage(stream.token, data);
+        await ctx.channel.send(content, { embed });
       }
-    } catch (error) {
-      console.log(`Failed to get twitch info for ${stream.token}`);
+
+      await ctx.db.Stream.update(stream.id, { online });
     }
   });
 }

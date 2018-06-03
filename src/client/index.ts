@@ -7,12 +7,12 @@ import onReady from './on-ready';
 import onMessage from './on-message';
 import config from '../config';
 
-export async function startClient(logger: Logger, db: Database) {
+export async function startClient(log: Logger, db: Database) {
   const client = new Client();
   client.login(config.DISCORD_KEY);
 
   const commands = getAllCommands(`${__dirname}/commands`);
-  const baseCtx = { logger, db, commands };
+  const baseCtx = { log, db, commands };
 
   client.on('ready', async () => {
     await onReady(client, baseCtx);

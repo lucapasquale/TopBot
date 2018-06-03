@@ -1,4 +1,4 @@
-import { Logger } from 'pino';
+import { Logger } from 'winston';
 import { Message, TextChannel } from 'discord.js';
 import { Database } from './database';
 
@@ -6,7 +6,7 @@ export type Logger = Logger;
 export type Database = Database;
 
 export type BaseContext = {
-  logger: Logger;
+  log: Logger;
   db: Database;
   commands: Command[];
 };

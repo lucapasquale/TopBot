@@ -4,19 +4,15 @@ import axios from 'axios';
 const redditApi = axios.create({ baseURL: 'https://www.reddit.com' });
 
 export default async function (ctx: CronCtx) {
-  try {
-    const { data } = await redditApi.get('r/MemeEconomy/top.json', {
-      params: { t: 'day', limit: 10 },
-    });
+  const { data } = await redditApi.get('r/MemeEconomy/top.json', {
+    params: { t: 'day', limit: 10 },
+  });
 
-    const topPosts = data.data.children;
-    const randomPost = topPosts[Math.floor(Math.random() * 10)];
+  const topPosts = data.data.children;
+  const randomPost = topPosts[Math.floor(Math.random() * 10)];
 
-    const { content, embed } = generateMessage(randomPost);
-    await ctx.channel.send(content, { embed });
-  } catch (error) {
-    console.log('Failed to get memeEconomy info');
-  }
+  const { content, embed } = generateMessage(randomPost);
+  await ctx.channel.send(content, { embed });
 }
 
 function generateMessage(post: any) {
