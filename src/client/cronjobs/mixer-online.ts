@@ -1,6 +1,6 @@
 import * as bluebird from 'bluebird';
 import axios from 'axios';
-import { CronCtx } from '../../../types';
+import { CronCtx } from '../../types';
 
 const mixerRequest = axios.create({ baseURL: 'https://mixer.com/api/v1' });
 

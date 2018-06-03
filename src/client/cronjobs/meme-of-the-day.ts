@@ -1,4 +1,4 @@
-import { CronCtx } from '../../../types';
+import { CronCtx } from '../../types';
 import axios from 'axios';
 
 const redditApi = axios.create({ baseURL: 'https://www.reddit.com' });

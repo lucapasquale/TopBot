@@ -1,8 +1,8 @@
 import * as bluebird from 'bluebird';
 import axios from 'axios';
 
-import { CronCtx } from '../../../types';
-import config from '../../../config';
+import { CronCtx } from '../../types';
+import config from '../../config';
 
 const twitchRequest = axios.create({
   baseURL: 'https://api.twitch.tv/helix',

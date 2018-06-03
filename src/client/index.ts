@@ -1,15 +1,14 @@
-import * as Discord from 'discord.js';
 import * as fs from 'fs';
 import * as path from 'path';
+import { Client } from 'discord.js';
 
 import { Logger, Database, Command } from '../types';
 import onReady from './on-ready';
 import onMessage from './on-message';
 import config from '../config';
 
-const client = new Discord.Client();
-
 export async function startClient(logger: Logger, db: Database) {
+  const client = new Client();
   client.login(config.DISCORD_KEY);
 
   const commands = getAllCommands(`${__dirname}/commands`);
