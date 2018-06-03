@@ -1,8 +1,7 @@
-import { TextChannel } from 'discord.js';
 import * as bluebird from 'bluebird';
 import axios from 'axios';
 
-import { Database } from '../../../types';
+import { CronCtx } from '../../../types';
 import config from '../../../config';
 
 const twitchRequest = axios.create({
@@ -10,19 +9,23 @@ const twitchRequest = axios.create({
   headers: { 'Client-ID': config.TWITCH_KEY },
 });
 
-export default async function (channel: TextChannel, db: Database) {
-  const twitchStreams = await db.Stream.find({ service: 'twitch' });
+export default async function handler(ctx: CronCtx) {
+  const twitchStreams = await ctx.db.Stream.find({ service: 'twitch' });
 
   await bluebird.each(twitchStreams, async (stream) => {
-    const { online, data } = await getStreamData(stream.token);
+    try {
+      const { online, data } = await getStreamData(stream.token);
 
-    if (stream.online !== online) {
-      if (online) {
-        const { content, embed } = await createMessage(stream.token, data);
-        await channel.send(content, { embed });
+      if (stream.online !== online) {
+        if (online) {
+          const { content, embed } = await createMessage(stream.token, data);
+          await ctx.channel.send(content, { embed });
+        }
+
+        await ctx.db.Stream.update(stream.id, { online });
       }
-
-      await db.Stream.update(stream.id, { online });
+    } catch (error) {
+      console.log(`Failed to get twitch info for ${stream.token}`);
     }
   });
 }

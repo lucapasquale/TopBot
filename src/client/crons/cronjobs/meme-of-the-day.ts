@@ -1,18 +1,22 @@
-import { TextChannel } from 'discord.js';
+import { CronCtx } from '../../../types';
 import axios from 'axios';
 
 const redditApi = axios.create({ baseURL: 'https://www.reddit.com' });
 
-export default async function (channel: TextChannel) {
-  const { data } = await redditApi.get('r/MemeEconomy/top.json', {
-    params: { t: 'day', limit: 10 },
-  });
+export default async function (ctx: CronCtx) {
+  try {
+    const { data } = await redditApi.get('r/MemeEconomy/top.json', {
+      params: { t: 'day', limit: 10 },
+    });
 
-  const topPosts = data.data.children;
-  const randomPost = topPosts[Math.floor(Math.random() * 10)];
+    const topPosts = data.data.children;
+    const randomPost = topPosts[Math.floor(Math.random() * 10)];
 
-  const { content, embed } = generateMessage(randomPost);
-  await channel.send(content, { embed });
+    const { content, embed } = generateMessage(randomPost);
+    await ctx.channel.send(content, { embed });
+  } catch (error) {
+    console.log('Failed to get memeEconomy info');
+  }
 }
 
 function generateMessage(post: any) {

@@ -1,7 +1,7 @@
-import { Context } from '../../../../types';
+import { CommandCtx } from '../../../../types';
 import { LolPlayer } from '../../../../database/entities/lol-player';
 
-export default async function (args: string[], ctx: Context) {
+export default async function (args: string[], ctx: CommandCtx) {
   const [playersNeeded] = args;
 
   if (!ctx.message.member.voiceChannel) {
@@ -21,7 +21,7 @@ export default async function (args: string[], ctx: Context) {
   return ctx.message.channel.send(`${prefix} are needed for LoL!\n${mentions.join(' ')}`);
 }
 
-async function getAvailablePlayers(ctx: Context, players: LolPlayer[]) {
+async function getAvailablePlayers(ctx: CommandCtx, players: LolPlayer[]) {
   const allMembers = ctx.message.guild.members.array();
   const voiceMembers = ctx.message.member.voiceChannel.members.array();
 

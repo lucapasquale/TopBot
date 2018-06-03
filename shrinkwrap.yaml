@@ -3,6 +3,7 @@ dependencies:
   '@types/dotenv': 4.0.3
   '@types/later': 1.2.4
   '@types/node': 10.3.0
+  '@types/pino': 4.16.0
   '@types/ramda': 0.25.32
   axios: 0.18.0
   bluebird: 3.5.1
@@ -10,6 +11,7 @@ dependencies:
   dotenv: 5.0.1
   later: 1.2.0
   pg: 7.4.3
+  pino: 4.17.3
   ramda: 0.25.0
   typeorm: 0.2.6
 devDependencies:
@@ -52,6 +54,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-mmhpINC/HcLGQK5ikFJlLXINVvcxhlrV+ZOUJSN7/ottYl+8X4oSXzS9lBtDkmWAl96EGyGyLrNvk9zqdSH8Fw==
+  /@types/events/1.2.0:
+    dev: false
+    resolution:
+      integrity: sha512-KEIlhXnIutzKwRbQkGWb/I4HFqBuUykAdHgDED6xqwXJfONCjF5VoE0cXEiurh3XauygxzeDzgtXUqvLkxFzzA==
   /@types/later/1.2.4:
     dev: false
     resolution:
@@ -60,6 +66,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-hWzNviaVFIr1TqcRA8ou49JaSHp+Rfabmnqg2kNvusKqLhPU0rIsGPUj5WJJ7ld4Bb7qdgLmIhLfCD1qS08IVA==
+  /@types/pino/4.16.0:
+    dependencies:
+      '@types/events': 1.2.0
+      '@types/node': 10.3.0
+    dev: false
+    resolution:
+      integrity: sha512-RP7YA3r9nhrLJHidgygV8IdNmkBIivZmYamKgUKjuUF8qfO+eENo8HImNbs8v/Ns4nqBcu7gGmBoIIn8Hbwilw==
   /@types/ramda/0.25.32:
     dev: false
     resolution:
@@ -223,6 +236,10 @@ packages:
   /concat-map/0.0.1:
     resolution:
       integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
+  /core-util-is/1.0.2:
+    dev: false
+    resolution:
+      integrity: sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
   /cross-spawn/5.1.0:
     dependencies:
       lru-cache: 4.1.3
@@ -284,6 +301,12 @@ packages:
       node: '>=4.6.0'
     resolution:
       integrity: sha512-4As8uPrjfwb7VXC+WnLCbXK7y+Ueb2B3zgNCePYfhxS1PYeaO1YTeplffTEcbfLhvFNGLAz90VvJs9yomG7bow==
+  /end-of-stream/1.4.1:
+    dependencies:
+      once: 1.4.0
+    dev: false
+    resolution:
+      integrity: sha512-1MkrZNvWTKCaigbn+W15elq2BB/L22nqrSY5DKlo3X6+vclJm8Bb5djXJBmEX6fS3+zCh/F4VBK5Z2KxJt4s2Q==
   /escape-string-regexp/1.0.5:
     engines:
       node: '>=0.8.0'
@@ -320,6 +343,14 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-lEvs00zEHuMqY6n68nrVpl/Fl3c=
+  /fast-json-parse/1.0.3:
+    dev: false
+    resolution:
+      integrity: sha512-FRWsaZRWEJ1ESVNbDWmsAlqDk96gPQezzLghafp5J4GUKjbCz3OkAHuZs5TuPEtkbVQERysLp9xv6c24fBm8Aw==
+  /fast-safe-stringify/1.2.3:
+    dev: false
+    resolution:
+      integrity: sha512-QJYT/i0QYoiZBQ71ivxdyTqkwKkQ0oxACXHYxH2zYHJEgzi2LsbjgvtzTbLi1SZcF190Db2YP7I7eTsU2egOlw==
   /figlet/1.2.0:
     dev: false
     engines:
@@ -334,6 +365,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-RdG35QbHF93UgndaK3eSCjwMV6c=
+  /flatstr/1.0.8:
+    dev: false
+    resolution:
+      integrity: sha512-YXblbv/vc1zuVVUtnKl1hPqqk7TalZCppnKE7Pr8FI/Rp48vzckS/4SJ4Y9O9RNiI82Vcw/FydmtqdQOg1Dpqw==
   /follow-redirects/1.5.0:
     dependencies:
       debug: 3.1.0
@@ -431,6 +466,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-ihis/Kmo9Bd+Cav8YDiTmwXR7t8=
+  /isarray/1.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=
   /isexe/2.0.0:
     dev: false
     resolution:
@@ -657,6 +696,23 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Knu0G2BltnkH6R2hsHwYR8h3swY=
+  /pino-std-serializers/2.1.0:
+    dev: false
+    resolution:
+      integrity: sha512-NqWvrQD/GpY78ybiNBzi/dg8ylERhDo6nB33j5sfCKpUmWLc3lYzeoBjyRoCMvEpDpL9lmH6ufRd0jw6rcd1pQ==
+  /pino/4.17.3:
+    dependencies:
+      chalk: 2.4.1
+      fast-json-parse: 1.0.3
+      fast-safe-stringify: 1.2.3
+      flatstr: 1.0.8
+      pino-std-serializers: 2.1.0
+      pump: 3.0.0
+      quick-format-unescaped: 1.1.2
+      split2: 2.2.0
+    dev: false
+    resolution:
+      integrity: sha512-3CBWMG1k6QdOyz9br3WzOhUQD52QFskbmlgX51wGXLPAY0UbKPsUIayYcVOQMCqjmeqEPCAG3V/Uvry+FjwtoQ==
   /postgres-array/1.0.2:
     dev: false
     engines:
@@ -687,14 +743,43 @@ packages:
     dev: false
     resolution:
       integrity: sha512-L6yc8P5NVG35ivzvfI7bcTYzqFV+K8gTfX9YaJbmIFfMXTs71RMnAupvTQPTCteGsiOy9QcNLkQyWjAafY/hCQ==
+  /process-nextick-args/2.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-MtEC1TqN0EU5nephaJ4rAtThHtC86dNN9qCuEhtshvpVBkAW5ZO7BASN9REnF9eoXGcRub+pFuKEpOHE+HbEMw==
   /pseudomap/1.0.2:
     dev: false
     resolution:
       integrity: sha1-8FKijacOYYkX7wqKw0wa5aaChrM=
+  /pump/3.0.0:
+    dependencies:
+      end-of-stream: 1.4.1
+      once: 1.4.0
+    dev: false
+    resolution:
+      integrity: sha512-LwZy+p3SFs1Pytd/jYct4wpv49HiYCqd9Rlc5ZVdk0V+8Yzv6jR5Blk3TRmPL1ft69TxP0IMZGJ+WPFU2BFhww==
+  /quick-format-unescaped/1.1.2:
+    dependencies:
+      fast-safe-stringify: 1.2.3
+    dev: false
+    resolution:
+      integrity: sha1-DKWB3jF0vs7yWsPC6JVjQjgdtpg=
   /ramda/0.25.0:
     dev: false
     resolution:
       integrity: sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ==
+  /readable-stream/2.3.6:
+    dependencies:
+      core-util-is: 1.0.2
+      inherits: 2.0.3
+      isarray: 1.0.0
+      process-nextick-args: 2.0.0
+      safe-buffer: 5.1.2
+      string_decoder: 1.1.1
+      util-deprecate: 1.0.2
+    dev: false
+    resolution:
+      integrity: sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==
   /reflect-metadata/0.1.12:
     resolution:
       integrity: sha512-n+IyV+nGz3+0q3/Yf1ra12KpCyi001bi4XFxSjbiWWjfqb52iTTtpGXmCCAOWWIAn9KEuFZKGqBERHmrtScZ3A==
@@ -762,6 +847,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-mTyOoPbrivtXnwnIxZRFYRrPNtEFKlpB2fvjSnCQUiAA6qAZzqwna5envK4uk6OIeP17CsdF3rSBGYVBsU0Tkg==
+  /split2/2.2.0:
+    dependencies:
+      through2: 2.0.3
+    dev: false
+    resolution:
+      integrity: sha512-RAb22TG39LhI31MbreBgIuKiIKhVsawfTgEGqKHTK87aG+ul/PB8Sqoi3I7kVdRWiCfrKxK3uo4/YUkpNvhPbw==
   /sprintf-js/1.0.3:
     resolution:
       integrity: sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
@@ -784,6 +875,12 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-nOqH59deCq9SRHlxq1Aw85Jnt4w6KvLKqWVik6oA9ZklXLNIOlqg4F2yrT1MVaTjAqvVwdfeZ7w7aCvJD7ugkw==
+  /string_decoder/1.1.1:
+    dependencies:
+      safe-buffer: 5.1.2
+    dev: false
+    resolution:
+      integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==
   /strip-ansi/3.0.1:
     dependencies:
       ansi-regex: 2.1.1
@@ -835,6 +932,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
+  /through2/2.0.3:
+    dependencies:
+      readable-stream: 2.3.6
+      xtend: 4.0.1
+    dev: false
+    resolution:
+      integrity: sha1-AARWmzfHx0ujnEPzzteNGtlBQL4=
   /tslib/1.9.0:
     dev: true
     resolution:
@@ -949,6 +1053,10 @@ packages:
       node: '>=4.2.0'
     resolution:
       integrity: sha512-h6pM2f/GDchCFlldnriOhs1QHuwbnmj6/v7499eMHqPeW4V2G0elua2eIc2nu8v2NdHV0Gm+tzX83Hr6nUFjQA==
+  /util-deprecate/1.0.2:
+    dev: false
+    resolution:
+      integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
   /which-module/2.0.0:
     dev: false
     resolution:
@@ -1067,6 +1175,7 @@ specifiers:
   '@types/dotenv': ^4.0.3
   '@types/later': ^1.2.4
   '@types/node': ^10.3.0
+  '@types/pino': ^4.16.0
   '@types/ramda': ^0.25.32
   axios: ^0.18.0
   bluebird: ^3.5.1
@@ -1074,6 +1183,7 @@ specifiers:
   dotenv: ^5.0.1
   later: ^1.2.0
   pg: ^7.4.3
+  pino: ^4.17.3
   ramda: ^0.25.0
   tslint: ^5.10.0
   tslint-config-airbnb: ^5.9.2

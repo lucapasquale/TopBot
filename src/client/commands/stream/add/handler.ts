@@ -1,8 +1,8 @@
-import { Context } from '../../../../types';
+import { CommandCtx } from '../../../../types';
 
 const services = ['twitch', 'mixer'];
 
-export default async function (args: string[], ctx: Context) {
+export default async function (args: string[], ctx: CommandCtx) {
   const [token, service = 'twitch'] = args;
 
   if (!token) {

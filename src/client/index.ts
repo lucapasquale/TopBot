@@ -1,22 +1,25 @@
+import * as Discord from 'discord.js';
 import { equals } from 'ramda';
-import { Client } from 'discord.js';
 
-import { Database, Command } from '../types';
+import { Logger, Database, Command } from '../types';
 import { startCrons } from './crons';
 import { getAllCommands } from './helpers';
 import config from '../config';
 
-const client = new Client();
+const client = new Discord.Client();
 const commands = getAllCommands(`${__dirname}/commands`);
 
-export async function startClient(db: Database) {
+export async function startClient(logger: Logger, db: Database) {
+  const baseCtx = { logger, db, commands };
   client.login(config.DISCORD_KEY);
 
   client.on('ready', async () => {
     console.log('Bot on!');
 
     await client.user.setActivity(`${config.CMD_PREFIX}help`);
-    startCrons(client, db);
+
+    const channel = getDefaultTextChannel(client);
+    startCrons({ ...baseCtx, channel });
   });
 
   client.on('message', async (message) => {
@@ -28,7 +31,7 @@ export async function startClient(db: Database) {
     if (!command) return;
 
     try {
-      await command.handler(args, { message, db, commands });
+      await command.handler(args, { ...baseCtx, message });
     } catch (error) {
       console.log('Error trying to execute command', {
         error,
@@ -37,6 +40,12 @@ export async function startClient(db: Database) {
       });
     }
   });
+}
+
+function getDefaultTextChannel(client: Discord.Client) {
+  const channels = client.channels;
+  const firstTextChannel = channels.filter((c: Discord.Channel) => c.type === 'text');
+  return firstTextChannel.first() as Discord.TextChannel;
 }
 
 function getCommandAndArgs(content: string) {
