@@ -13,7 +13,7 @@ export default async function (args: string[], ctx: CommandCtx) {
     return ctx.message.reply(`that is not a valid streaming site. Available: ${services.join()}`);
   }
 
-  await ctx.db.Stream.upsert({ token, service });
+  await ctx.db.Stream.findOrCreate({ token, service });
 
   return ctx.message.channel.send(`Stream **${token}** added to the list of streamers!`);
 }
