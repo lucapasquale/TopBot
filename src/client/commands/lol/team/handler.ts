@@ -1,5 +1,5 @@
 import { CommandCtx } from '../../../../types';
-import { LolPlayer } from '../../../../database/entities/lol-player';
+import { LolPlayer } from '../../../../database/entity/lol-player';
 
 export default async function (args: string[], ctx: CommandCtx) {
   const [playersNeeded] = args;

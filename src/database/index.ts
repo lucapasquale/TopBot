@@ -1,12 +1,13 @@
-import { createConnection, Connection } from 'typeorm';
+import { createConnection, Connection, Repository } from 'typeorm';
 import config from '../config';
 
-import { LolPlayerRepository, StreamRepository } from './extension';
+import { StreamRepository } from './entity/stream';
+import { LolPlayerRepository } from './entity/lol-player';
 
 export type Database = {
   connection: Connection;
-  LolPlayer: LolPlayerRepository;
   Stream: StreamRepository;
+  LolPlayer: LolPlayerRepository;
 };
 
 export async function startDatabase() {
@@ -14,16 +15,16 @@ export async function startDatabase() {
     type: 'postgres',
     url: config.PG_URI,
     synchronize: true,
-    entities: [`${__dirname}/entities/*.js`],
+    entities: [`${__dirname}/entity/*.js`],
   });
 
   const database = {
     connection,
-    LolPlayer: connection.getCustomRepository(LolPlayerRepository),
     Stream: connection.getCustomRepository(StreamRepository),
+    LolPlayer: connection.getCustomRepository(LolPlayerRepository),
   };
 
-  initializeDatabase(database);
+  await initializeDatabase(database);
   return database;
 }
 

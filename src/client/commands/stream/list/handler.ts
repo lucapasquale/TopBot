@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { CommandCtx } from '../../../../types';
-import { Stream } from '../../../../database/entities/stream';
+import { Stream } from '../../../../database/entity/stream';
 
 export default async function (_: string[], ctx: CommandCtx) {
   const streams = await ctx.db.Stream.find({
