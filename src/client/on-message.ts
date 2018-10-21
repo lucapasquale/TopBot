@@ -12,7 +12,9 @@ export default async function (message: Discord.Message, baseCtx: BaseContext) {
   }
 
   const { command, args } = getCommandAndArgs(baseCtx, content);
-  if (!command) return;
+  if (!command) {
+    return;
+  }
 
   try {
     baseCtx.log.debug('executing command', { content, author: author.username });

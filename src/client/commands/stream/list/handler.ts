@@ -15,11 +15,6 @@ export default async function (_: string[], ctx: CommandCtx) {
   return ctx.message.channel.send(content, { embed });
 }
 
-const firstLetterUpperCase = R.compose(
-  R.join(''),
-  R.juxt([R.compose(R.toUpper, R.head), R.tail]),
-);
-
 function generateMessage(allStreams: Stream[]) {
   const serviceStreams = R.groupBy<Stream>(R.prop('service'), allStreams);
   const services = R.keys(serviceStreams);
@@ -31,7 +26,7 @@ function generateMessage(allStreams: Stream[]) {
     });
 
     return {
-      name: firstLetterUpperCase(service),
+      name: service,
       value: values.join('\n'),
       inline: true,
     };
