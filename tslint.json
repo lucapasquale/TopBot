@@ -1,6 +1,12 @@
 {
-  "extends": ["tslint-config-airbnb"],
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
   "rules": {
-    "brace-style": "stroustrup"
+    "quotemark": false,
+    "object-literal-sort-keys": false,
+    "interface-name": false,
+    "member-access": false,
+    "member-ordering": false,
+    "ordered-imports": false,
+    "variable-name": false
   }
 }

@@ -1,10 +1,10 @@
-import { createConnection, Connection, Repository } from 'typeorm';
+import { createConnection, Connection } from 'typeorm';
 import config from '../config';
 
 import { StreamRepository } from './entity/stream';
 import { LolPlayerRepository } from './entity/lol-player';
 
-export type Database = {
+export interface Database {
   connection: Connection;
   Stream: StreamRepository;
   LolPlayer: LolPlayerRepository;
@@ -14,8 +14,8 @@ export async function startDatabase() {
   const connection = await createConnection({
     type: 'postgres',
     url: config.PG_URI,
-    synchronize: true,
-    entities: [`${__dirname}/entity/*.js`],
+    synchronize: config.ENV === 'test',
+    entities: [`${__dirname}/entity/*.{js,ts}`],
   });
 
   const database = {
