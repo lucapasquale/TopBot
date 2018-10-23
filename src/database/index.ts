@@ -14,6 +14,7 @@ export async function startDatabase() {
   const connection = await createConnection({
     type: 'postgres',
     url: config.PG_URI,
+    ssl: true,
     synchronize: config.ENV === 'test',
     entities: [`${__dirname}/entity/*.{js,ts}`],
   });
