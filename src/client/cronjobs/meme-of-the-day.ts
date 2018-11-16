@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const redditApi = axios.create({ baseURL: 'https://www.reddit.com' });
 
-export default async function (ctx: CronCtx) {
+export default async function(ctx: CronCtx) {
   const { data } = await redditApi.get('r/MemeEconomy/top.json', {
     params: { t: 'day', limit: 10 },
   });

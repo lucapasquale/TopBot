@@ -1,32 +1,32 @@
 import { Logger } from 'winston';
 import { Message, TextChannel } from 'discord.js';
-import { Database } from './database';
+import { Database } from './common/db';
 
 export type Logger = Logger;
 export type Database = Database;
 
-export type BaseContext = {
+export interface BaseContext {
   log: Logger;
   db: Database;
   commands: Command[];
-};
+}
 
 export type CommandCtx = BaseContext & {
   message: Message;
 };
-export type Command = {
+export interface Command {
   tag: string[];
   handler: (args: string[], ctx: CommandCtx) => Promise<any>;
   doc?: {
     args: string[];
     description: string;
-  }
-};
+  };
+}
 
-export type CronCtx = BaseContext & {
+export interface CronCtx extends BaseContext {
   channel: TextChannel;
-};
-export type Cronjob = {
+}
+export interface Cronjob {
   interval: string;
   handler: (ctx: CronCtx) => Promise<void>;
-};
+}

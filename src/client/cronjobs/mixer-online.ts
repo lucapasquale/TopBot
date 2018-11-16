@@ -7,7 +7,7 @@ const mixerRequest = axios.create({ baseURL: 'https://mixer.com/api/v1' });
 export default async function handler(ctx: CronCtx) {
   const mixerStreams = await ctx.db.Stream.find({ service: 'mixer' });
 
-  await bluebird.map(mixerStreams, async (stream) => {
+  await bluebird.map(mixerStreams, async stream => {
     const { online, data } = await getStreamData(stream.token);
 
     if (stream.online !== online) {
@@ -36,9 +36,10 @@ function createMessage(token: string, data: any) {
       url,
       title: name,
       description: `**Game:** ${type.name}\n**Viewers:** ${viewersCurrent}`,
-      color: 0x1FBAED,
+      color: 0x1fbaed,
       thumbnail: {
-        url: 'https://github.com/mixer/branding-kit/blob/master/png/MixerMerge_Dark.png?raw=true',
+        url:
+          'https://github.com/mixer/branding-kit/blob/master/png/MixerMerge_Dark.png?raw=true',
       },
     },
   };

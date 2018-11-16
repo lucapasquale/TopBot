@@ -1,5 +1,5 @@
 import { createLogger } from './common/logger';
-import { startDatabase } from './database';
+import { startDatabase } from './common/db';
 import { startClient } from './client';
 
 start();

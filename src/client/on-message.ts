@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { BaseContext } from '../types';
 import config from '../config';
 
-export default async function (message: Discord.Message, baseCtx: BaseContext) {
+export default async function(message: Discord.Message, baseCtx: BaseContext) {
   const { content, author } = message;
 
   if (author.bot || content.charAt(0) !== config.CMD_PREFIX) {
@@ -17,10 +17,12 @@ export default async function (message: Discord.Message, baseCtx: BaseContext) {
   }
 
   try {
-    baseCtx.log.debug('executing command', { content, author: author.username });
+    baseCtx.log.debug('executing command', {
+      content,
+      author: author.username,
+    });
     await command.handler(args, { ...baseCtx, message });
-  }
-  catch (error) {
+  } catch (error) {
     baseCtx.log.error('failed to execute command', {
       content,
       author: author.username,
@@ -37,7 +39,7 @@ function getCommandAndArgs(ctx: BaseContext, content: string) {
   const tags = cleanContent.split(' ');
 
   for (let l = tags.length; l >= 1; l -= 1) {
-    const command = ctx.commands.find((cmd) => {
+    const command = ctx.commands.find(cmd => {
       return R.equals(cmd.tag, tags.slice(0, l));
     });
 

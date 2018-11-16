@@ -12,7 +12,7 @@ const twitchRequest = axios.create({
 export default async function handler(ctx: CronCtx) {
   const twitchStreams = await ctx.db.Stream.find({ service: 'twitch' });
 
-  await bluebird.each(twitchStreams, async (stream) => {
+  await bluebird.each(twitchStreams, async stream => {
     const { online, data } = await getStreamData(stream.token);
 
     if (stream.online !== online) {
@@ -45,7 +45,7 @@ async function createMessage(token: string, streamData: any) {
       url,
       title: display_name,
       description: `${title}\n**Viewers:** ${viewer_count}`,
-      color: 0x6441A4,
+      color: 0x6441a4,
       thumbnail: { url: profile_image_url },
     },
   };

@@ -7,14 +7,14 @@ export function createLogger() {
     format: winston.format.combine(
       winston.format.timestamp(),
       winston.format.colorize(),
-      winston.format.json(),
+      winston.format.json()
     ),
 
     transports: [
       new winston.transports.Console({
         format: winston.format.combine(
           winston.format.timestamp(),
-          winston.format.simple(),
+          winston.format.simple()
         ),
       }),
 

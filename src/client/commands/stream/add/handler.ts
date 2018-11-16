@@ -2,7 +2,7 @@ import { CommandCtx } from '../../../../types';
 
 const services = ['twitch', 'mixer'];
 
-export default async function (args: string[], ctx: CommandCtx) {
+export default async function(args: string[], ctx: CommandCtx) {
   const [token, service = 'twitch'] = args;
 
   if (!token) {
@@ -10,10 +10,14 @@ export default async function (args: string[], ctx: CommandCtx) {
   }
 
   if (!services.includes(service)) {
-    return ctx.message.reply(`that is not a valid streaming site. Available: ${services.join()}`);
+    return ctx.message.reply(
+      `that is not a valid streaming site. Available: ${services.join()}`
+    );
   }
 
   await ctx.db.Stream.findOrCreate({ token, service });
 
-  return ctx.message.channel.send(`Stream **${token}** added to the list of streamers!`);
+  return ctx.message.channel.send(
+    `Stream **${token}** added to the list of streamers!`
+  );
 }

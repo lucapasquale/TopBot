@@ -1,6 +1,6 @@
 import { CommandCtx } from '../../../../types';
 
-export default async function (args: string[], ctx: CommandCtx) {
+export default async function(args: string[], ctx: CommandCtx) {
   const [token] = args;
 
   if (!token) {
@@ -8,5 +8,7 @@ export default async function (args: string[], ctx: CommandCtx) {
   }
 
   await ctx.db.Stream.delete({ token });
-  return ctx.message.channel.send(`Stream **${token}** removed from list of streamers`);
+  return ctx.message.channel.send(
+    `Stream **${token}** removed from list of streamers`
+  );
 }

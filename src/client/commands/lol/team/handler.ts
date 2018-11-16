@@ -1,7 +1,7 @@
 import { CommandCtx } from '../../../../types';
 import { LolPlayer } from '../../../../database/entity/lol-player';
 
-export default async function (args: string[], ctx: CommandCtx) {
+export default async function(args: string[], ctx: CommandCtx) {
   const [playersNeeded] = args;
 
   if (!ctx.message.member.voiceChannel) {
@@ -16,16 +16,18 @@ export default async function (args: string[], ctx: CommandCtx) {
   }
 
   const prefix = playersNeeded ? `${playersNeeded} people` : 'People';
-  const mentions = availablePlayers.map(p => (`<@${p.userId}>`));
+  const mentions = availablePlayers.map(p => `<@${p.userId}>`);
 
-  return ctx.message.channel.send(`${prefix} are needed for LoL!\n${mentions.join(' ')}`);
+  return ctx.message.channel.send(
+    `${prefix} are needed for LoL!\n${mentions.join(' ')}`
+  );
 }
 
 async function getAvailablePlayers(ctx: CommandCtx, players: LolPlayer[]) {
   const allMembers = ctx.message.guild.members.array();
   const voiceMembers = ctx.message.member.voiceChannel.members.array();
 
-  return players.filter((player) => {
+  return players.filter(player => {
     const member = allMembers.find(member => member.id === player.userId);
     const isOnline = ['online', 'idle'].includes(member.user.presence.status);
 

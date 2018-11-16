@@ -1,6 +1,6 @@
 import { CommandCtx, Command } from '../../../types';
 
-export default async function (_: string[], ctx: CommandCtx) {
+export default async function(_: string[], ctx: CommandCtx) {
   const cmdsWithDoc = ctx.commands.filter(cmd => cmd.doc);
 
   const { embed } = generateMessage(cmdsWithDoc);
@@ -13,20 +13,24 @@ function generateMessage(commands: Command[]) {
 
   return {
     embed: {
-      fields: [{
-        name: 'TopBot Commands',
-        value: cmdsValue.join(' '),
-      }],
+      fields: [
+        {
+          name: 'TopBot Commands',
+          value: cmdsValue.join(' '),
+        },
+      ],
       footer: { text: '[...] => Required | (...) => Optional' },
     },
   };
 }
 
 function parseModulesHelpText(commands: Command[]) {
-  const cmdsHelp = commands.map((cmd) => {
+  const cmdsHelp = commands.map(cmd => {
     return {
       module: cmd.tag[0],
-      help: `**$${cmd.tag.join(' ')} ${cmd.doc.args.join(' ')}**\n${cmd.doc.description}\n\n`,
+      help: `**$${cmd.tag.join(' ')} ${cmd.doc.args.join(' ')}**\n${
+        cmd.doc.description
+      }\n\n`,
     };
   });
 
