@@ -1,8 +1,8 @@
 import * as Discord from 'discord.js';
 import * as R from 'ramda';
 
-import { BaseContext } from '../types';
-import config from '../config';
+import { BaseContext } from '../../types';
+import config from '../../config';
 
 export default async function(message: Discord.Message, baseCtx: BaseContext) {
   const { content, author } = message;

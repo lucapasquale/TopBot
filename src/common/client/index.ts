@@ -2,8 +2,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Client } from 'discord.js';
 
-import { Logger, Database, Command } from '../types';
-import config from '../config';
+import { Logger, Database, Command } from '../../types';
+import config from '../../config';
 import onReady from './on-ready';
 import onMessage from './on-message';
 

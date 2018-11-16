@@ -1,9 +1,9 @@
 import * as Discord from 'discord.js';
 import * as later from 'later';
 
-import { BaseContext, Cronjob, CronCtx } from '../types';
-import cronjobs from './cronjobs';
-import config from '../config';
+import { BaseContext, Cronjob, CronCtx } from '../../types';
+import cronjobs from '../../cronjobs';
+import config from '../../config';
 
 export default async function(client: Discord.Client, baseCtx: BaseContext) {
   await client.user.setActivity(`${config.CMD_PREFIX}help`);
