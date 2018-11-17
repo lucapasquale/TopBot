@@ -1,15 +1,17 @@
 import { Entity, Index, Column } from 'typeorm';
-import { BaseModel } from '../base-model';
+import { BaseModel } from '../common/database/base-model';
+
+export const servicesEnum = ['twitch', 'mixer'];
 
 @Entity()
-@Index(['token', 'service'], { unique: true })
+@Index(['user', 'service'], { unique: true })
 export default class Stream extends BaseModel<Stream> {
   @Column()
-  token: string;
+  user: string;
 
   @Column({
     type: 'enum',
-    enum: ['twitch', 'mixer'],
+    enum: servicesEnum,
     default: 'twitch',
   })
   service: string;

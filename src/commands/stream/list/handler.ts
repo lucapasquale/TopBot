@@ -1,6 +1,6 @@
 import * as R from 'ramda';
-import { CommandCtx } from '../../../../types';
-import { Stream } from '../../../../database/entity/stream';
+import { CommandCtx } from '../../../types';
+import Stream from '../../../models/stream';
 
 export default async function(_: string[], ctx: CommandCtx) {
   const streams = await ctx.db.Stream.find({
@@ -21,8 +21,8 @@ function generateMessage(allStreams: Stream[]) {
 
   const fields = services.map((service: string) => {
     const streams = serviceStreams[service];
-    const values = streams.map(({ online, token }: Stream) => {
-      return online ? `**${token}**` : token;
+    const values = streams.map(({ online, user }: Stream) => {
+      return online ? `**${user}**` : user;
     });
 
     return {

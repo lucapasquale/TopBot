@@ -1,14 +1,14 @@
-import { CommandCtx } from '../../../../types';
+import { CommandCtx } from '../../../types';
 
 export default async function(args: string[], ctx: CommandCtx) {
-  const [token] = args;
+  const [user] = args;
 
-  if (!token) {
-    return ctx.message.reply('please inform a user!');
+  if (!user) {
+    return ctx.message.reply('please inform a stream!');
   }
 
-  await ctx.db.Stream.delete({ token });
+  await ctx.db.Stream.delete({ user });
   return ctx.message.channel.send(
-    `Stream **${token}** removed from list of streamers`
+    `Stream **${user}** removed from list of streamers`
   );
 }

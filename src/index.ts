@@ -1,6 +1,6 @@
 import { createLogger } from './common/logger';
-import { startDatabase } from './common/db';
-import { startClient } from './client';
+import { startDatabase } from './common/database';
+import { startClient } from './common/client';
 
 start();
 

@@ -1,14 +1,14 @@
 import { createConnection, Connection } from 'typeorm';
-import SnakeNamingStrategy from '../models/snake-name-strategy';
-import config from '../config';
+import SnakeNamingStrategy from './snake-name-strategy';
+import config from '../../config';
 
-import Stream from '../models/stream';
-import LolPlayer from '../models/lol-player';
+import Stream from '../../models/stream';
+import Player from '../../models/player';
 
 export interface Database {
   connection: Connection;
   Stream: typeof Stream;
-  LolPlayer: typeof LolPlayer;
+  Player: typeof Player;
 }
 
 export async function startDatabase() {
@@ -17,13 +17,13 @@ export async function startDatabase() {
     url: config.PG_URI,
     synchronize: config.ENV === 'test',
     namingStrategy: new SnakeNamingStrategy(),
-    entities: [`${__dirname}/entity/*.{js,ts}`],
+    entities: [`${__dirname}/../../models/*.{js,ts}`],
   });
 
   const database = {
     connection,
     Stream,
-    LolPlayer,
+    Player,
   };
 
   await initializeDatabase(database);

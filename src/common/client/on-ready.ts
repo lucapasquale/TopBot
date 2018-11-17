@@ -1,17 +1,17 @@
 import * as Discord from 'discord.js';
 import * as later from 'later';
 
-import { BaseContext, Cronjob, CronCtx } from '../../types';
+import { Context, Cronjob, CronCtx } from '../../types';
 import cronjobs from '../../cronjobs';
 import config from '../../config';
 
-export default async function(client: Discord.Client, baseCtx: BaseContext) {
-  await client.user.setActivity(`${config.CMD_PREFIX}help`);
+export default async function(ctx: Context) {
+  await ctx.client.user.setActivity(`${config.CMD_PREFIX}help`);
 
-  const channel = getDefaultTextChannel(client);
-  startCrons(baseCtx, channel);
+  const channel = getDefaultTextChannel(ctx.client);
+  startCrons(ctx, channel);
 
-  baseCtx.log.info('Bot ready!');
+  ctx.log.info('Bot ready!');
 }
 
 function getDefaultTextChannel(client: Discord.Client) {
@@ -22,10 +22,13 @@ function getDefaultTextChannel(client: Discord.Client) {
   return firstTextChannel.first() as Discord.TextChannel;
 }
 
-function startCrons(baseCtx: BaseContext, channel: Discord.TextChannel) {
+function startCrons(ctx: Context, channel: Discord.TextChannel) {
   cronjobs.forEach(cj => {
-    const ctx = { ...baseCtx, channel };
-    later.setInterval(() => runCron(cj, ctx), later.parse.text(cj.interval));
+    const cronCtx = { ...ctx, channel };
+    later.setInterval(
+      () => runCron(cj, cronCtx),
+      later.parse.text(cj.interval)
+    );
   });
 }
 

@@ -5,16 +5,12 @@
   "main": "index.js",
   "scripts": {
     "lint": "tslint --project tsconfig.json './src/**/*.ts'",
+    "prettier": "prettier --write './src/**/*.ts'",
     "build": "rm -rf build && tsc",
     "start": "node -r dotenv/config build/index.js",
     "dev": "ts-node -r dotenv/config src"
   },
   "dependencies": {
-    "@types/bluebird": "^3.5.20",
-    "@types/dotenv": "^6.1.0",
-    "@types/later": "^1.2.4",
-    "@types/node": "^10.12.9",
-    "@types/ramda": "^0.25.41",
     "axios": "^0.18.0",
     "bluebird": "^3.5.3",
     "discord.js": "^11.3.2",
@@ -27,7 +23,13 @@
     "winston": "^3.0.0-rc6"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.20",
+    "@types/dotenv": "^6.1.0",
+    "@types/later": "^1.2.4",
+    "@types/node": "^10.12.9",
     "@types/pluralize": "^0.0.29",
+    "@types/ramda": "^0.25.41",
+    "prettier": "^1.15.1",
     "ts-node": "^7.0.1",
     "tslint": "^5.10.0",
     "tslint-config-prettier": "^1.16.0",

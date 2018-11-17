@@ -1,10 +1,10 @@
 import * as Discord from 'discord.js';
 import * as R from 'ramda';
 
-import { BaseContext } from '../../types';
+import { Context } from '../../types';
 import config from '../../config';
 
-export default async function(message: Discord.Message, baseCtx: BaseContext) {
+export default async function(message: Discord.Message, baseCtx: Context) {
   const { content, author } = message;
 
   if (author.bot || content.charAt(0) !== config.CMD_PREFIX) {
@@ -34,7 +34,7 @@ export default async function(message: Discord.Message, baseCtx: BaseContext) {
   }
 }
 
-function getCommandAndArgs(ctx: BaseContext, content: string) {
+function getCommandAndArgs(ctx: Context, content: string) {
   const cleanContent = content.trim().split(config.CMD_PREFIX)[1];
   const tags = cleanContent.split(' ');
 

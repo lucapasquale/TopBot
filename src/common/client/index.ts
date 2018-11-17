@@ -11,15 +11,15 @@ export async function startClient(log: Logger, db: Database) {
   const client = new Client();
   client.login(config.DISCORD_KEY);
 
-  const commands = getAllCommands(`${__dirname}/commands`);
-  const baseCtx = { log, db, commands };
+  const commands = getAllCommands(`${__dirname}/../../commands`);
+  const ctx = { client, log, db, commands };
 
   client.on('ready', async () => {
-    await onReady(client, baseCtx);
+    await onReady(ctx);
   });
 
   client.on('message', async message => {
-    await onMessage(message, baseCtx);
+    await onMessage(message, ctx);
   });
 }
 
@@ -47,6 +47,8 @@ function getAllCommands(commandsPath: string): Command[] {
 }
 
 function hasHandler(basePath: string, folderName: string): boolean {
-  const commandPath = path.join(basePath, folderName, 'handler.js');
-  return fs.existsSync(commandPath);
+  return ['js', 'ts'].some(fileType => {
+    const filePath = path.join(basePath, folderName, `handler.${fileType}`);
+    return fs.existsSync(filePath);
+  });
 }
