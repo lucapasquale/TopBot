@@ -9,9 +9,8 @@ const cmd: Command = {
     schema,
     args: ['game'],
   },
-  doc: {
-    args: ['[game]'],
-    description: '',
+  help: {
+    description: 'Remove yourself from list of players. *game* is optional',
   },
 };
 

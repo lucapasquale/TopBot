@@ -23,8 +23,7 @@ export interface Command {
     args: string[];
     schema?: Joi.Schema;
   };
-  doc?: {
-    args: string[];
+  help?: {
     description: string;
   };
 }

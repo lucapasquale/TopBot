@@ -1,9 +1,11 @@
 import { CommandCtx, Command } from '../../types';
 
 export default async function(_, ctx: CommandCtx) {
-  const cmdsWithDoc = ctx.commands.filter(cmd => cmd.doc);
+  const cmdsWithHelp = ctx.commands.filter(
+    cmd => cmd.help && cmd.help.description
+  );
 
-  const { embed } = generateMessage(cmdsWithDoc);
+  const { embed } = generateMessage(cmdsWithHelp);
   await ctx.message.channel.send({ embed });
 }
 
@@ -19,17 +21,17 @@ function generateMessage(commands: Command[]) {
           value: cmdsValue.join(' '),
         },
       ],
-      footer: { text: '[...] => Required | (...) => Optional' },
     },
   };
 }
 
 function parseModulesHelpText(commands: Command[]) {
   const cmdsHelp = commands.map(cmd => {
+    const args = cmd.validation.args.map(arg => `(*${arg}*)`);
     return {
       module: cmd.tag[0],
-      help: `**$${cmd.tag.join(' ')} ${cmd.doc.args.join(' ')}**\n${
-        cmd.doc.description
+      help: `**$${cmd.tag.concat(args).join(' ')}**\n${
+        cmd.help.description
       }\n\n`,
     };
   });

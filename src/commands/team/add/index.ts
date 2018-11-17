@@ -9,9 +9,9 @@ const cmd: Command = {
     schema,
     args: ['game'],
   },
-  doc: {
-    args: ['[game]'],
-    description: '',
+  help: {
+    description:
+      'Add yourself to be notified when a player is needed for a *game*',
   },
 };
 

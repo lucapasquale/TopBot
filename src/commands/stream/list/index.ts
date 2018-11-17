@@ -7,8 +7,7 @@ const cmd: Command = {
   validation: {
     args: [],
   },
-  doc: {
-    args: [],
+  help: {
     description: 'Lists all saved streams',
   },
 };

@@ -9,9 +9,8 @@ const cmd: Command = {
     args: ['streamName'],
     schema,
   },
-  doc: {
-    args: ['[stream_name]'],
-    description: 'Removes *stream_name* from the list of saved streams',
+  help: {
+    description: 'Removes *streamName* from the list of saved streams',
   },
 };
 

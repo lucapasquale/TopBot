@@ -9,9 +9,8 @@ const cmd: Command = {
     schema,
     args: ['game'],
   },
-  doc: {
-    args: ['[game]'],
-    description: '',
+  help: {
+    description: 'Find available players for a *game*',
   },
 };
 
