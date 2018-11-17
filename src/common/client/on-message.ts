@@ -1,29 +1,37 @@
 import * as Discord from 'discord.js';
+import * as Joi from 'joi';
 import * as R from 'ramda';
 
-import { Context } from '../../types';
+import { Context, Command } from '../../types';
 import config from '../../config';
 
-export default async function(message: Discord.Message, baseCtx: Context) {
+export default async function(message: Discord.Message, ctx: Context) {
   const { content, author } = message;
 
   if (author.bot || content.charAt(0) !== config.CMD_PREFIX) {
     return;
   }
 
-  const { command, args } = getCommandAndArgs(baseCtx, content);
+  const { command, args } = getCommandAndArgs(ctx, content);
   if (!command) {
     return;
   }
 
+  if (command.validation.schema) {
+    const { error } = validateArgs(command, args);
+    if (error) {
+      return sendJoiErrorMessage(message, error);
+    }
+  }
+
   try {
-    baseCtx.log.debug('executing command', {
+    ctx.log.debug('executing command', {
       content,
       author: author.username,
     });
-    await command.handler(args, { ...baseCtx, message });
+    await command.handler(args, { ...ctx, message });
   } catch (error) {
-    baseCtx.log.error('failed to execute command', {
+    ctx.log.error('failed to execute command', {
       content,
       author: author.username,
       error: {
@@ -49,4 +57,20 @@ function getCommandAndArgs(ctx: Context, content: string) {
   }
 
   return { command: null, args: [] };
+}
+
+function validateArgs(command: Command, args: string[]) {
+  const argsObject = command.validation.args.reduce((obj, key, i) => {
+    return { ...obj, [key]: args[i] };
+  }, {});
+
+  return Joi.validate(argsObject, command.validation.schema);
+}
+
+function sendJoiErrorMessage(
+  message: Discord.Message,
+  error: Joi.ValidationError
+) {
+  const details = error.details[0];
+  return message.reply(`Invalid options for command:\n${details.message}`);
 }

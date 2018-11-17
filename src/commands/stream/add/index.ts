@@ -1,9 +1,14 @@
 import { Command } from '../../../types';
 import handler from './handler';
+import schema from './schema';
 
 const cmd: Command = {
-  handler,
   tag: ['stream', 'add'],
+  handler,
+  validation: {
+    schema,
+    args: ['name', 'service'],
+  },
   doc: {
     args: ['[stream_name]', '(twitch | mixer)'],
     description:
