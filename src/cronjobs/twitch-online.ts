@@ -13,11 +13,11 @@ export default async function handler(ctx: CronCtx) {
   const twitchStreams = await ctx.db.Stream.find({ service: 'twitch' });
 
   await bluebird.each(twitchStreams, async stream => {
-    const { online, data } = await getStreamData(stream.token);
+    const { online, data } = await getStreamData(stream.name);
 
     if (stream.online !== online) {
       if (online) {
-        const { content, embed } = await createMessage(stream.token, data);
+        const { content, embed } = await createMessage(stream.name, data);
         await ctx.channel.send(content, { embed });
       }
 
@@ -26,18 +26,18 @@ export default async function handler(ctx: CronCtx) {
   });
 }
 
-async function getStreamData(token: string) {
-  const { data } = await twitchRequest.get(`streams?user_login=${token}`);
+async function getStreamData(name: string) {
+  const { data } = await twitchRequest.get(`streams?user_login=${name}`);
   const streamData = data.data[0];
 
   return { data: streamData, online: !!streamData };
 }
 
-async function createMessage(token: string, streamData: any) {
+async function createMessage(name: string, streamData: any) {
   const { user_id, title, viewer_count } = streamData;
 
   const { display_name, profile_image_url } = await getUserData(user_id);
-  const url = `https://go.twitch.tv/${token}`;
+  const url = `https://go.twitch.tv/${name}`;
 
   return {
     content: `**${display_name}** is streaming!\n${url}`,

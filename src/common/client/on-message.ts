@@ -19,7 +19,7 @@ export default async function(message: Discord.Message, ctx: Context) {
 
   const { error, value } = validateArgs(command, args);
   if (error) {
-    return sendJoiErrorMessage(message, error);
+    return sendJoiErrorMessage(message, command, error);
   }
 
   try {
@@ -67,8 +67,14 @@ function validateArgs(command: Command, args: string[]) {
 
 function sendJoiErrorMessage(
   message: Discord.Message,
+  command: Command,
   error: Joi.ValidationError
 ) {
-  const details = error.details[0];
-  return message.reply(`Invalid options for command:\n${details.message}`);
+  const errorDetails = error.details[0];
+  const inputs = command.tag.concat(command.validation.args);
+
+  return message.reply(
+    `invalid options for command: **${config.CMD_PREFIX}${inputs.join(' ')}**
+    ${errorDetails.message}`
+  );
 }

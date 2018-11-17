@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { CommandCtx } from '../../../types';
 import Stream from '../../../models/stream';
 
-export default async function(_: string[], ctx: CommandCtx) {
+export default async function(_, ctx: CommandCtx) {
   const streams = await ctx.db.Stream.find({
     order: { online: 'DESC' },
   });

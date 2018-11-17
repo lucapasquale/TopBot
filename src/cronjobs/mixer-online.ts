@@ -8,11 +8,11 @@ export default async function handler(ctx: CronCtx) {
   const mixerStreams = await ctx.db.Stream.find({ service: 'mixer' });
 
   await bluebird.map(mixerStreams, async stream => {
-    const { online, data } = await getStreamData(stream.token);
+    const { online, data } = await getStreamData(stream.name);
 
     if (stream.online !== online) {
       if (online) {
-        const { content, embed } = createMessage(stream.token, data);
+        const { content, embed } = createMessage(stream.name, data);
         await ctx.channel.send(content, { embed });
       }
 
@@ -21,17 +21,17 @@ export default async function handler(ctx: CronCtx) {
   });
 }
 
-async function getStreamData(token: string) {
-  const { data } = await mixerRequest.get(`channels/${token}/details`);
+async function getStreamData(name: string) {
+  const { data } = await mixerRequest.get(`channels/${name}/details`);
   return { data, online: !!data.online };
 }
 
-function createMessage(token: string, data: any) {
+function createMessage(streamName: string, data: any) {
   const { type, name, viewersCurrent } = data;
-  const url = `https://mixer.com/${token}`;
+  const url = `https://mixer.com/${streamName}`;
 
   return {
-    content: `**${token}** is now streaming!\n${url}`,
+    content: `**${streamName}** is now streaming!\n${url}`,
     embed: {
       url,
       title: name,
