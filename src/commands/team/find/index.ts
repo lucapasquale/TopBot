@@ -1,14 +1,16 @@
 import { Command } from '../../../types';
 import handler from './handler';
+import schema from './schema';
 
 const cmd: Command = {
+  tag: ['team', 'find'],
   handler,
-  tag: ['stream', 'list'],
   validation: {
-    args: [],
+    schema,
+    args: ['game'],
   },
   help: {
-    description: 'Lists all saved streams',
+    description: 'Find available players for a *game*',
   },
 };
 

@@ -4,18 +4,19 @@ import config from '../../config';
 
 import Stream from '../../models/stream';
 import Player from '../../models/player';
+import Game from '../../models/game';
 
 export interface Database {
   connection: Connection;
   Stream: typeof Stream;
   Player: typeof Player;
+  Game: typeof Game;
 }
 
 export async function startDatabase() {
   const connection = await createConnection({
     type: 'postgres',
     url: config.PG_URI,
-    synchronize: config.ENV === 'test',
     namingStrategy: new SnakeNamingStrategy(),
     entities: [`${__dirname}/../../models/*.{js,ts}`],
   });
@@ -24,6 +25,7 @@ export async function startDatabase() {
     connection,
     Stream,
     Player,
+    Game,
   };
 
   await initializeDatabase(database);

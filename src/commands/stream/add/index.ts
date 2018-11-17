@@ -9,11 +9,9 @@ const cmd: Command = {
     schema,
     args: ['streamName', 'service'],
   },
-  doc: {
-    args: ['[stream_name]', '(twitch | mixer)'],
-    description:
-      'Start receiving notifications when *stream_name* becomes' +
-      ' online on *twitch* or *mixer*. Default is Twitch',
+  help: {
+    description: `Start receiving notifications when *streamName* becomes online on twitch or mixer.
+      Default is Twitch`,
   },
 };
 

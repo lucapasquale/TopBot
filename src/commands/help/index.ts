@@ -2,6 +2,9 @@ import { Command } from '../../types';
 import handler from './handler';
 
 export default {
-  handler,
   tag: ['help'],
+  handler,
+  validation: {
+    args: [],
+  },
 } as Command;

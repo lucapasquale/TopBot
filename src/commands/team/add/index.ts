@@ -3,14 +3,15 @@ import handler from './handler';
 import schema from './schema';
 
 const cmd: Command = {
+  tag: ['team', 'add'],
   handler,
-  tag: ['stream', 'remove'],
   validation: {
-    args: ['streamName'],
     schema,
+    args: ['game'],
   },
   help: {
-    description: 'Removes *streamName* from the list of saved streams',
+    description:
+      'Add yourself to be notified when a player is needed for a *game*',
   },
 };
 
