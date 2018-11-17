@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+
 import { CommandCtx } from '../../../types';
 import Stream from '../../../models/stream';
 
@@ -21,8 +22,8 @@ function generateMessage(allStreams: Stream[]) {
 
   const fields = services.map((service: string) => {
     const streams = serviceStreams[service];
-    const values = streams.map(({ online, user }: Stream) => {
-      return online ? `**${user}**` : user;
+    const values = streams.map(({ online, name }: Stream) => {
+      return online ? `**${name}**` : name;
     });
 
     return {

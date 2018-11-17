@@ -7,7 +7,7 @@ const cmd: Command = {
   handler,
   validation: {
     schema,
-    args: ['name', 'service'],
+    args: ['streamName', 'service'],
   },
   doc: {
     args: ['[stream_name]', '(twitch | mixer)'],

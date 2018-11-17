@@ -18,7 +18,7 @@ export interface CommandCtx extends Context {
 }
 export interface Command {
   tag: string[];
-  handler: (args: string[], ctx: CommandCtx) => Promise<any>;
+  handler: (args: any, ctx: CommandCtx) => Promise<any>;
   validation: {
     args: string[];
     schema?: Joi.Schema;

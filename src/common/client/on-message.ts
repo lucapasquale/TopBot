@@ -17,11 +17,9 @@ export default async function(message: Discord.Message, ctx: Context) {
     return;
   }
 
-  if (command.validation.schema) {
-    const { error } = validateArgs(command, args);
-    if (error) {
-      return sendJoiErrorMessage(message, error);
-    }
+  const { error, value } = validateArgs(command, args);
+  if (error) {
+    return sendJoiErrorMessage(message, error);
   }
 
   try {
@@ -29,7 +27,7 @@ export default async function(message: Discord.Message, ctx: Context) {
       content,
       author: author.username,
     });
-    await command.handler(args, { ...ctx, message });
+    await command.handler(value, { ...ctx, message });
   } catch (error) {
     ctx.log.error('failed to execute command', {
       content,
@@ -64,7 +62,7 @@ function validateArgs(command: Command, args: string[]) {
     return { ...obj, [key]: args[i] };
   }, {});
 
-  return Joi.validate(argsObject, command.validation.schema);
+  return Joi.validate(argsObject, command.validation.schema || Joi.any());
 }
 
 function sendJoiErrorMessage(

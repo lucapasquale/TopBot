@@ -4,10 +4,10 @@ import { BaseModel } from '../common/database/base-model';
 export const servicesEnum = ['twitch', 'mixer'];
 
 @Entity()
-@Index(['user', 'service'], { unique: true })
+@Index(['name', 'service'], { unique: true })
 export default class Stream extends BaseModel<Stream> {
   @Column()
-  user: string;
+  name: string;
 
   @Column({
     type: 'enum',

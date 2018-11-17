@@ -4,6 +4,9 @@ import handler from './handler';
 const cmd: Command = {
   handler,
   tag: ['stream', 'list'],
+  validation: {
+    args: [],
+  },
   doc: {
     args: [],
     description: 'Lists all saved streams',

@@ -24,7 +24,7 @@ export abstract class BaseModel<T> extends BaseEntity {
     return this.save();
   }
 
-  static async findOrCreate<T>(
+  static async findOrCreate<T extends BaseEntity>(
     where: FindConditions<T>,
     defaults: any = {}
   ): Promise<T> {

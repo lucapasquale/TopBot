@@ -1,22 +1,13 @@
 import { CommandCtx } from '../../../types';
-import { servicesEnum } from '../../../models/stream';
+import Stream from '../../../models/stream';
+import { Args } from './schema';
 
-export default async function(args: string[], ctx: CommandCtx) {
-  const [user, service = 'twitch'] = args;
+export default async function(args: Args, ctx: CommandCtx) {
+  const { streamName: name, service } = args;
 
-  if (!user) {
-    return ctx.message.reply('please inform the stream name!');
-  }
-
-  if (!servicesEnum.includes(service)) {
-    return ctx.message.reply(
-      `that is not a valid streaming site. Available: ${servicesEnum.join()}`
-    );
-  }
-
-  await ctx.db.Stream.findOrCreate({ user, service });
+  await ctx.db.Stream.findOrCreate<Stream>({ name, service });
 
   return ctx.message.channel.send(
-    `Stream **${user}** added to the list of streamers!`
+    `Stream **${name}** added to the list of streams!`
   );
 }

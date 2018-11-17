@@ -1,14 +1,12 @@
 import { CommandCtx } from '../../../types';
+import { Args } from './schema';
 
-export default async function(args: string[], ctx: CommandCtx) {
-  const [user] = args;
+export default async function(args: Args, ctx: CommandCtx) {
+  const { streamName: name } = args;
 
-  if (!user) {
-    return ctx.message.reply('please inform a stream!');
-  }
+  await ctx.db.Stream.delete({ name });
 
-  await ctx.db.Stream.delete({ user });
   return ctx.message.channel.send(
-    `Stream **${user}** removed from list of streamers`
+    `Stream **${name}** removed from list of streamers`
   );
 }
