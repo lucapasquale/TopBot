@@ -28,7 +28,7 @@ export abstract class BaseModel<T> extends BaseEntity {
     where: FindConditions<T>,
     defaults: any = {}
   ): Promise<T> {
-    const instance = await this.findOne(where);
+    const instance = await this.findOne(where as any);
     if (instance) {
       return instance as any;
     }

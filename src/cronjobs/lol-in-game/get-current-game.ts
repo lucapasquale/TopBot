@@ -1,0 +1,70 @@
+import axios from 'axios';
+import config from '../../config';
+
+const lolRequest = axios.create({
+  baseURL: config.LOL_URL,
+  headers: {
+    'X-Riot-Token': config.LOL_KEY,
+  },
+});
+
+export interface CurrentGame {
+  gameQueueConfigId: number;
+  teams: Team[];
+}
+interface Team {
+  teamId: number;
+  participants: Participants[];
+}
+export interface Participants {
+  champion: { name: string };
+  summoner: {
+    name: string;
+    leagues: {
+      solo: League;
+      flex: League;
+    };
+  };
+}
+interface League {
+  rank: string;
+  tier: string;
+}
+
+export default async function(username: string): Promise<CurrentGame> {
+  const response = await lolRequest.post('/graphql', {
+    variables: { username },
+    query: `{
+      summoner(name: "${username}") {
+        id
+        currentGame {
+          gameQueueConfigId
+          teams {
+            teamId
+            participants {
+              summoner {
+                name
+                leagues {
+                  solo {
+                    rank
+                    tier
+                  }
+                  flex {
+                    rank
+                    tier
+                  }
+                }
+              }
+              champion {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+    `,
+  });
+
+  return response.data.data.summoner.currentGame;
+}
