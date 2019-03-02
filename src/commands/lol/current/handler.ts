@@ -1,40 +1,36 @@
-import * as bluebird from 'bluebird';
-
-import { CronCtx } from '../../types';
-import Player from '../../models/player';
+import { CommandCtx } from '../../../types';
 import getCurrentGame, { CurrentGame, Participants } from './get-current-game';
 
-export default async function handler(ctx: CronCtx) {
-  const players = await ctx.db.Player.find({
-    where: { game: { code: 'lol' } },
+export default async function(_: any, ctx: CommandCtx) {
+  const player = await ctx.db.Player.findOne({
+    userId: ctx.message.author.id,
   });
 
-  await bluebird.map(players, async player => {
-    const currentGame = await getCurrentGame(player.username);
+  if (!player) {
+    return ctx.message.reply('you are not saved as a LoL player');
+  }
 
-    if (player.inGame !== !!currentGame) {
-      await player.update({ inGame: !!currentGame });
+  const currentGame = await getCurrentGame(player.username);
+  if (!currentGame) {
+    return ctx.message.reply('you are not in a game!');
+  }
 
-      if (currentGame) {
-        const { content, embed } = createMessage(player, currentGame);
-        await ctx.channel.send(content, { embed });
-      }
-    }
-  });
+  const { content, embed } = createMessage(player.username, currentGame);
+  await ctx.message.channel.send(content, { embed });
 }
 
-function createMessage(player: Player, currentGame: CurrentGame) {
+function createMessage(username: string, currentGame: CurrentGame) {
   const queue = currentGame.gameQueueConfigId === 420 ? 'solo' : 'flex';
 
   const blueTeam = currentGame.teams.find(t => t.teamId === 100);
   const redTeam = currentGame.teams.find(t => t.teamId === 200);
 
   return {
-    content: `${player.username} current game:`,
+    content: `${username} current game:`,
     embed: {
       fields: [
         {
-          name: 'Team Blue',
+          name: 'Blue Team',
           inline: true,
           value: blueTeam.participants
             .map(p => parseParticipants(queue, p))
@@ -42,7 +38,7 @@ function createMessage(player: Player, currentGame: CurrentGame) {
         },
 
         {
-          name: 'Team Red',
+          name: 'Red Team',
           inline: true,
           value: redTeam.participants
             .map(p => parseParticipants(queue, p))

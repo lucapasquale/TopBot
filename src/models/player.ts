@@ -10,9 +10,6 @@ export default class Player extends BaseModel<Player> {
   @Column()
   username: string;
 
-  @Column({ default: false })
-  inGame: boolean;
-
   @ManyToOne(_ => Game, game => game.players)
   game: Game;
 }

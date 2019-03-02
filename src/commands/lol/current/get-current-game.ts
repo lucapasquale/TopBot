@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../../config';
+import config from '../../../config';
 
 const lolRequest = axios.create({
   baseURL: config.LOL_URL,
@@ -32,8 +32,7 @@ interface League {
 }
 
 export default async function(username: string): Promise<CurrentGame> {
-  const response = await lolRequest.post('/graphql', {
-    variables: { username },
+  const { data } = await lolRequest.post('/graphql', {
     query: `{
       summoner(name: "${username}") {
         id
@@ -66,5 +65,5 @@ export default async function(username: string): Promise<CurrentGame> {
     `,
   });
 
-  return response.data.data.summoner.currentGame;
+  return data.data.summoner.currentGame;
 }

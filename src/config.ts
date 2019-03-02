@@ -10,6 +10,6 @@ export default {
   DISCORD_KEY: process.env.DISCORD_KEY,
   TWITCH_KEY: process.env.TWITCH_KEY,
 
-  LOL_URL: 'localhost:8080' || process.env.LOL_URL,
+  LOL_URL: 'http://localhost:8080' || process.env.LOL_URL,
   LOL_KEY: process.env.LOL_KEY,
 };
