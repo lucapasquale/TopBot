@@ -4,17 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "tslint --project tsconfig.json './src/**/*.ts'",
-    "prettier": "prettier --write './src/**/*.ts'",
     "build": "rm -rf build && tsc",
-    "start": "npm run-script build && node -r dotenv/config build/index.js",
-    "dev": "ts-node -r dotenv/config src"
+    "start": "yarn build && node ./build"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "bluebird": "^3.5.3",
     "discord.js": "^11.4.2",
-    "dotenv": "^6.1.0",
     "joi": "^14.0.6",
     "later": "^1.2.0",
     "pg": "^7.6.1",

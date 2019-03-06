@@ -4,9 +4,7 @@
     "module": "commonjs",
     "outDir": "./build",
     "sourceMap": true,
-    "resolveJsonModule": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "lib": ["esnext.asynciterable", "es2015", "es2016"]
   },
   "include": ["./src/**/*"]
 }
