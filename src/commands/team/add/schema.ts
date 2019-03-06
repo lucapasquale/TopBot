@@ -1,9 +1,9 @@
-import * as Joi from 'joi';
+import * as Joi from 'joi'
 
 export interface Args {
-  game: string;
+  game: string
 }
 
 export default Joi.object({
   game: Joi.string().required(),
-}).required();
+}).required()

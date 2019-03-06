@@ -1,15 +1,15 @@
-import { Entity, Column, OneToMany } from 'typeorm';
-import { BaseModel } from '../common/database/base-model';
-import Player from './player';
+import { Entity, Column, OneToMany } from 'typeorm'
+import { BaseModel } from '../common/database/base-model'
+import Player from './player'
 
 @Entity()
 export default class Game extends BaseModel<Game> {
   @Column()
-  name: string;
+  public name: string
 
   @Column({ unique: true })
-  code: string;
+  public code: string
 
   @OneToMany(_ => Player, player => player.game)
-  players: Player[];
+  public players: Player[]
 }

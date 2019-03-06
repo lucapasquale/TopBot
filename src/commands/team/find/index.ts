@@ -1,6 +1,6 @@
-import { Command } from '../../../types';
-import handler from './handler';
-import schema from './schema';
+import { Command } from '../../../types'
+import handler from './handler'
+import schema from './schema'
 
 const cmd: Command = {
   tag: ['team', 'find'],
@@ -12,6 +12,6 @@ const cmd: Command = {
   help: {
     description: 'Find available players for a *game*',
   },
-};
+}
 
-export default cmd;
+export default cmd

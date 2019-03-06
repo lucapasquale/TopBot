@@ -1,5 +1,5 @@
-import { Command } from '../../types';
-import handler from './handler';
+import { Command } from '../../types'
+import handler from './handler'
 
 export default {
   tag: ['help'],
@@ -7,4 +7,4 @@ export default {
   validation: {
     args: [],
   },
-} as Command;
+} as Command

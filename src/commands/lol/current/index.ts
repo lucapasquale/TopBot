@@ -1,5 +1,5 @@
-import { Command } from '../../../types';
-import handler from './handler';
+import { Command } from '../../../types'
+import handler from './handler'
 
 const cmd: Command = {
   tag: ['lol', 'current'],
@@ -10,6 +10,6 @@ const cmd: Command = {
   help: {
     description: 'Get current game info',
   },
-};
+}
 
-export default cmd;
+export default cmd

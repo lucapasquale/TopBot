@@ -1,6 +1,6 @@
-import { Command } from '../../../types';
-import handler from './handler';
-import schema from './schema';
+import { Command } from '../../../types'
+import handler from './handler'
+import schema from './schema'
 
 const cmd: Command = {
   tag: ['team', 'remove'],
@@ -12,6 +12,6 @@ const cmd: Command = {
   help: {
     description: 'Remove yourself from list of players. *game* is optional',
   },
-};
+}
 
-export default cmd;
+export default cmd

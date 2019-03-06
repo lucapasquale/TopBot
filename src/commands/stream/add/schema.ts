@@ -1,9 +1,9 @@
-import * as Joi from 'joi';
-import { servicesEnum } from '../../../models/stream';
+import * as Joi from 'joi'
+import { servicesEnum } from '../../../models/stream'
 
 export interface Args {
-  streamName: string;
-  service: 'twitch' | 'mixer';
+  streamName: string
+  service: 'twitch' | 'mixer'
 }
 
 export default Joi.object({
@@ -11,4 +11,4 @@ export default Joi.object({
   service: Joi.string()
     .valid(servicesEnum)
     .default('twitch'),
-}).required();
+}).required()

@@ -5,32 +5,32 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf build && tsc",
-    "start": "yarn build && node ./build"
+    "start": "yarn build && node -r dotenv/config ./build"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "bluebird": "^3.5.3",
     "discord.js": "^11.4.2",
-    "joi": "^14.0.6",
+    "joi": "^14.3.1",
     "later": "^1.2.0",
-    "pg": "^7.6.1",
+    "pg": "^7.8.1",
     "pluralize": "^7.0.0",
-    "ramda": "^0.25.0",
-    "typeorm": "^0.2.9",
-    "winston": "^3.1.0"
+    "ramda": "^0.26.1",
+    "typeorm": "^0.2.14",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
-    "@types/bluebird": "^3.5.20",
+    "@types/bluebird": "^3.5.26",
     "@types/dotenv": "^6.1.0",
-    "@types/joi": "^14.0.0",
-    "@types/later": "^1.2.4",
-    "@types/node": "^10.12.9",
+    "@types/joi": "^14.3.2",
+    "@types/later": "^1.2.5",
+    "@types/node": "^11.10.5",
     "@types/pluralize": "^0.0.29",
-    "@types/ramda": "^0.25.41",
-    "prettier": "^1.15.1",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.10.0",
-    "tslint-config-prettier": "^1.16.0",
-    "typescript": "^3.1.6"
+    "@types/ramda": "^0.25.51",
+    "prettier": "^1.16.4",
+    "ts-node": "^8.0.2",
+    "tslint": "^5.13.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.3.3333"
   }
 }

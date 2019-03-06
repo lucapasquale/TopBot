@@ -1,12 +1,12 @@
-import { createLogger } from './common/logger';
-import { startDatabase } from './common/database';
-import { startClient } from './common/client';
+import { createLogger } from './common/logger'
+import { startDatabase } from './common/database'
+import { startClient } from './common/client'
 
-start();
+start()
 
 async function start() {
-  const logger = createLogger();
-  const db = await startDatabase();
+  const logger = createLogger()
+  const db = await startDatabase()
 
-  await startClient(logger, db);
+  await startClient(logger, db)
 }

@@ -1,34 +1,34 @@
-import axios from 'axios';
-import config from '../../../config';
+import axios from 'axios'
+import config from '../../../config'
 
 const lolRequest = axios.create({
   baseURL: config.LOL_URL,
   headers: {
     'X-Riot-Token': config.LOL_KEY,
   },
-});
+})
 
 export interface CurrentGame {
-  gameQueueConfigId: number;
-  teams: Team[];
+  gameQueueConfigId: number
+  teams: Team[]
 }
 interface Team {
-  teamId: number;
-  participants: Participants[];
+  teamId: number
+  participants: Participants[]
 }
 export interface Participants {
-  champion: { name: string };
+  champion: { name: string }
   summoner: {
-    name: string;
+    name: string
     leagues: {
-      solo: League;
-      flex: League;
-    };
-  };
+      solo: League
+      flex: League
+    }
+  }
 }
 interface League {
-  rank: string;
-  tier: string;
+  rank: string
+  tier: string
 }
 
 export default async function(username: string): Promise<CurrentGame> {
@@ -63,7 +63,7 @@ export default async function(username: string): Promise<CurrentGame> {
       }
     }
     `,
-  });
+  })
 
-  return data.data.summoner.currentGame;
+  return data.data.summoner.currentGame
 }

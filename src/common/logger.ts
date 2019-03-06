@@ -1,4 +1,4 @@
-import * as winston from 'winston';
+import * as winston from 'winston'
 
 export function createLogger() {
   const logger = winston.createLogger({
@@ -21,7 +21,7 @@ export function createLogger() {
       new winston.transports.File({ filename: 'error.log', level: 'error' }),
       new winston.transports.File({ filename: 'combined.log' }),
     ],
-  });
+  })
 
-  return logger;
+  return logger
 }

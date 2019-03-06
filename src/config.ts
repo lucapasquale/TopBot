@@ -7,4 +7,4 @@ export default {
 
   LOL_URL: 'http://localhost:8080' || process.env.LOL_URL,
   LOL_KEY: process.env.LOL_KEY,
-};
+}

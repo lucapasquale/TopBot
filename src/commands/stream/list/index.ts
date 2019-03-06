@@ -1,5 +1,5 @@
-import { Command } from '../../../types';
-import handler from './handler';
+import { Command } from '../../../types'
+import handler from './handler'
 
 const cmd: Command = {
   handler,
@@ -10,6 +10,6 @@ const cmd: Command = {
   help: {
     description: 'Lists all saved streams',
   },
-};
+}
 
-export default cmd;
+export default cmd
