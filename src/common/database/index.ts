@@ -4,14 +4,12 @@ import SnakeNamingStrategy from './snake-name-strategy'
 import config from '../../config'
 
 import Stream from '../../models/stream'
-import Player from '../../models/player'
-import Game from '../../models/game'
+import LolPlayer from '../../models/lol-player'
 
-export interface Database {
+export type Database = {
   connection: Connection
   Stream: typeof Stream
-  Player: typeof Player
-  Game: typeof Game
+  LolPlayer: typeof LolPlayer
 }
 
 export async function startDatabase() {
@@ -25,8 +23,7 @@ export async function startDatabase() {
   const database = {
     connection,
     Stream,
-    Player,
-    Game,
+    LolPlayer,
   }
 
   await initializeDatabase(database)

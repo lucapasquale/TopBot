@@ -1,22 +1,22 @@
+import * as Joi from 'joi'
 import { Logger } from 'winston'
 import { Client, Message, TextChannel } from 'discord.js'
 import { Database } from './common/database'
-import * as Joi from 'joi'
 
 export type Logger = Logger
 export type Database = Database
 
-export interface Context {
+export type Context = {
   log: Logger
   db: Database
   client: Client
   commands: Command[]
 }
 
-export interface CommandCtx extends Context {
+export type CommandCtx = Context & {
   message: Message
 }
-export interface Command {
+export type Command = {
   tag: string[]
   handler: (args: any, ctx: CommandCtx) => Promise<any>
   validation: {
@@ -28,10 +28,10 @@ export interface Command {
   }
 }
 
-export interface CronCtx extends Context {
+export type CronCtx = Context & {
   channel: TextChannel
 }
-export interface Cronjob {
+export type Cronjob = {
   interval: string
   handler: (ctx: CronCtx) => Promise<void>
 }

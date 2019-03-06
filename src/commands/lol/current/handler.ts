@@ -1,51 +1,55 @@
 import { CommandCtx } from '../../../types'
 import getCurrentGame, { CurrentGame, Participants } from './get-current-game'
+import { Args } from './schema'
 
-export default async function(_: any, ctx: CommandCtx) {
-  const player = await ctx.db.Player.findOne({
+export default async function(args: Args, ctx: CommandCtx) {
+  const nickname = await getPlayerNickname(ctx, args)
+
+  const currentGame = await getCurrentGame(nickname)
+  if (!currentGame) {
+    return ctx.message.reply(`${nickname} is not ingame!`)
+  }
+
+  const embed = createEmbed(currentGame)
+  await ctx.message.channel.send(`${nickname} current game:`, { embed })
+}
+
+async function getPlayerNickname(ctx: CommandCtx, args: Args) {
+  if (args.nickname) {
+    return args.nickname
+  }
+
+  const player = await ctx.db.LolPlayer.findOne({
     userId: ctx.message.author.id,
   })
 
-  if (!player) {
-    return ctx.message.reply('you are not saved as a LoL player')
-  }
-
-  const currentGame = await getCurrentGame(player.username)
-  if (!currentGame) {
-    return ctx.message.reply('you are not in a game!')
-  }
-
-  const { content, embed } = createMessage(player.username, currentGame)
-  await ctx.message.channel.send(content, { embed })
+  return player && player.nickname
 }
 
-function createMessage(username: string, currentGame: CurrentGame) {
+function createEmbed(currentGame: CurrentGame) {
   const queue = currentGame.gameQueueConfigId === 420 ? 'solo' : 'flex'
 
   const blueTeam = currentGame.teams.find(t => t.teamId === 100)
   const redTeam = currentGame.teams.find(t => t.teamId === 200)
 
   return {
-    content: `${username} current game:`,
-    embed: {
-      fields: [
-        {
-          name: 'Blue Team',
-          inline: true,
-          value: blueTeam.participants
-            .map(p => parseParticipants(queue, p))
-            .join('\n\n'),
-        },
+    fields: [
+      {
+        name: 'Blue Team',
+        inline: true,
+        value: blueTeam.participants
+          .map(p => parseParticipants(queue, p))
+          .join('\n\n'),
+      },
 
-        {
-          name: 'Red Team',
-          inline: true,
-          value: redTeam.participants
-            .map(p => parseParticipants(queue, p))
-            .join('\n\n'),
-        },
-      ],
-    },
+      {
+        name: 'Red Team',
+        inline: true,
+        value: redTeam.participants
+          .map(p => parseParticipants(queue, p))
+          .join('\n\n'),
+      },
+    ],
   }
 }
 

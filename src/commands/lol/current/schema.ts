@@ -1,9 +1,9 @@
 import * as Joi from 'joi'
 
 export interface Args {
-  game: string
+  nickname: string
 }
 
 export default Joi.object({
-  game: Joi.string().required(),
+  nickname: Joi.string(),
 }).required()
