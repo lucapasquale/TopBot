@@ -3,7 +3,7 @@ import handler from './handler'
 import schema from './schema'
 
 const cmd: Command = {
-  tag: ['lol', 'current'],
+  tag: ['lol', 'current2'],
   handler,
   validation: {
     schema,

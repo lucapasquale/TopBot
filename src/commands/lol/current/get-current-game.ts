@@ -9,7 +9,7 @@ const lolRequest = axios.create({
 })
 
 export interface CurrentGame {
-  gameQueueConfigId: number
+  queue: string
   teams: Team[]
 }
 interface Team {
@@ -37,7 +37,7 @@ export default async function(username: string): Promise<CurrentGame> {
       summoner(name: "${username}") {
         id
         currentGame {
-          gameQueueConfigId
+          queue
           teams {
             teamId
             participants {

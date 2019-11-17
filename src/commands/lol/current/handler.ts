@@ -27,8 +27,6 @@ async function getPlayerNickname(ctx: CommandCtx, args: Args) {
 }
 
 function createEmbed(currentGame: CurrentGame) {
-  const queue = currentGame.gameQueueConfigId === 420 ? 'solo' : 'flex'
-
   const blueTeam = currentGame.teams.find(t => t.teamId === 100)
   const redTeam = currentGame.teams.find(t => t.teamId === 200)
 
@@ -36,29 +34,44 @@ function createEmbed(currentGame: CurrentGame) {
     fields: [
       {
         name: 'Blue Team',
-        inline: true,
         value: blueTeam.participants
-          .map(p => parseParticipants(queue, p))
-          .join('\n\n'),
+          .map(p => parseParticipants(currentGame, p))
+          .join('\n'),
       },
 
       {
         name: 'Red Team',
-        inline: true,
         value: redTeam.participants
-          .map(p => parseParticipants(queue, p))
-          .join('\n\n'),
+          .map(p => parseParticipants(currentGame, p))
+          .join('\n'),
       },
     ],
   }
 }
 
-function parseParticipants(queue: string, participant: Participants) {
+function parseParticipants(game: CurrentGame, participant: Participants) {
   const summonerName = participant.summoner.name
   const champion = participant.champion.name
 
+  const queue = game.queue === 'RANKED_FLEX_5V5' ? 'flex' : 'solo'
   const league = participant.summoner.leagues[queue]
-  const currentRank = league ? `${league.tier} - ${league.rank}` : 'Unranked'
 
-  return [`${summonerName} - ${champion}`, `${currentRank}`].join('\n')
+  const currentRank = league ? `${league.tier} - ${league.rank}` : 'UNRAKNED'
+
+  return [
+    '`',
+    fixedSizeString(summonerName, 20),
+    fixedSizeString(champion, 14),
+    fixedSizeString(currentRank, 15),
+    '`',
+  ].join('')
+}
+
+function fixedSizeString(text: string, size: number) {
+  const diff = size - text.length
+  if (diff > 0) {
+    return text + ' '.repeat(diff)
+  }
+
+  return text.substring(0, size - 1) + ' '
 }
