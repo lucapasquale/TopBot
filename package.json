@@ -20,7 +20,7 @@
     "pg": "^7.6.1",
     "pluralize": "^7.0.0",
     "ramda": "^0.25.0",
-    "typeorm": "^0.2.9",
+    "typeorm": "^0.2.25",
     "winston": "^3.1.0"
   },
   "devDependencies": {
