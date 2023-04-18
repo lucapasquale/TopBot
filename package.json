@@ -11,7 +11,7 @@
     "dev": "ts-node -r dotenv/config src"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.2",
     "bluebird": "^3.5.3",
     "discord.js": "^11.4.2",
     "dotenv": "^6.1.0",
